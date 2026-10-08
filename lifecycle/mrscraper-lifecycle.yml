@@ -1,0 +1,21 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/api/overview
+versioning:
+  scheme: path
+  current: v1
+  note: The Platform API is served under /api/v1 on api.app.mrscraper.com while the reference section is labelled "v3"; the
+    Scraper API gateway (api.mrscraper.com) is unversioned in the path and its Swagger document says info.version 1.0. Product
+    releases follow semantic versions (v3.4.14 in the changelog). No written versioning policy is published.
+  docs: https://docs.mrscraper.com/docs/api/overview
+deprecation:
+  policy: null
+  url: null
+  headers: null
+  note: No deprecation or sunset policy is published on docs.mrscraper.com, and neither the docs nor the gateway contract
+    document Deprecation or Sunset headers (RFC 8594). Recorded as an absence.
+sla: none published
+status_page: https://status.mrscraper.com
+status_page_provider: HetrixTools
+changelog: https://docs.mrscraper.com/docs/changelog/2026/v3.4.14
+deprecated_operations: []

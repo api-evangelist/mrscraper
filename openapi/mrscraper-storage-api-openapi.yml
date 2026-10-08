@@ -1,0 +1,99 @@
+openapi: 3.2.0
+info:
+  title: Mrscraper Storage API
+  version: '1.0'
+  contact: {}
+  x-refined-note:
+  - x-original-format differs across the merged source definitions and was not carried
+  - x-original-url differs across the merged source definitions and was not carried
+  description: 'Operations tagged storage across 2 of this provider''s published API definitions: api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.mrscraper.com
+tags:
+- name: Storage
+paths:
+  /storage/{key}:
+    get:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      description: Returns the stored body directly with application/json content type, without a message/data envelope. The key may contain multiple path segments and must belong to the authenticated user.
+      tags:
+      - Storage
+      summary: Retrieve a stored result
+      parameters:
+      - description: Full storage key, for example results/<user-scope>/<uuid>.json
+        name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Raw stored result body; its shape depends on the saved result
+        '400':
+          description: Invalid storage key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          description: Result belongs to another user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '404':
+          description: Result not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '503':
+          description: Result storage is temporarily unavailable
+          headers:
+            Retry-After:
+              description: Retry delay in seconds (5)
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+      operationId: getStoredResult
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      description: atk_example_not_a_real_token
+      type: apiKey
+      name: x-api-token
+      in: header
+    BearerAuth:
+      description: '"Bearer <token>" — a MrScraper API token, or an OAuth 2.1 access token issued by the platform for the MCP connector (scopes: scrape:read for GET /, scrape:write for POST /, account:read for GET /subscription-accounts).'
+      type: apiKey
+      name: Authorization
+      in: header
+x-refined-from:
+- api.mrscraper.com-docs-doc.json
+- mrscraper-scraper-service-gateway-openapi.yml

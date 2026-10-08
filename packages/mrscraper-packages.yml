@@ -1,0 +1,64 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/integrations/sdk
+note: Versions and dates read from the registry metadata endpoints on 2026-10-07 (registry.npmjs.org, pypi.org/pypi/<pkg>/json). The unrelated npm package `mrscraper` (0.0.1, 2015, a seetickets comedy-events scraper by a third party) and the empty npm placeholder `mrscraper-cli` (no published versions) are deliberately excluded.
+packages:
+- name: '@mrscraper/cli'
+  registry: npm
+  url: https://www.npmjs.com/package/@mrscraper/cli
+  language: javascript
+  official: true
+  version: 0.3.2
+  published: '2026-08-26'
+  repository: https://github.com/mrscraper-com/cli
+  docs: https://docs.mrscraper.com/docs/getting-started/cli
+  description: MrScraper CLI for HTML fetching, AI extraction, Google SERPs, reruns, results and account status; `init` also installs the four agent skills.
+- name: '@mrscraper/mcp'
+  registry: npm
+  url: https://www.npmjs.com/package/@mrscraper/mcp
+  language: javascript
+  official: true
+  version: 0.1.3
+  published: '2026-08-26'
+  repository: https://github.com/mrscraper-com/mrscraper-mcp
+  docs: https://docs.mrscraper.com/docs/getting-started/mcp-server
+  description: MrScraper MCP server (stdio or Streamable HTTP) for web fetching, extraction, Google SERPs, saved scraper reruns and results.
+- name: '@mrscraper/sdk'
+  registry: npm
+  url: https://www.npmjs.com/package/@mrscraper/sdk
+  language: javascript
+  official: true
+  version: 1.1.4
+  published: '2026-06-02'
+  repository: https://github.com/mrscraper-com/sdk-node
+  docs: https://docs.mrscraper.com/docs/integrations/node
+  description: Official Node.js SDK for the MrScraper API (fetch pages, Google SERP, run AI scrapers, rerun, results).
+- name: n8n-nodes-mrscraper
+  registry: npm
+  url: https://www.npmjs.com/package/n8n-nodes-mrscraper
+  language: javascript
+  official: true
+  version: 3.0.6
+  published: '2026-09-09'
+  repository: https://github.com/mrscraper-com/n8n-nodes-mrscraper
+  description: n8n community nodes package for MrScraper.
+- name: mrscraper-sdk
+  registry: pypi
+  url: https://pypi.org/project/mrscraper-sdk/
+  language: python
+  official: true
+  version: 0.3.0
+  published: '2026-09-08'
+  repository: https://github.com/mrscraper-com/sdk-python
+  docs: https://docs.mrscraper.com/docs/integrations/python
+  description: Typed async Python client for the MrScraper web-scraping API (author R&D Team MrScraper).
+- name: langchain-mrscraper
+  registry: pypi
+  url: https://pypi.org/project/langchain-mrscraper/
+  language: python
+  official: true
+  version: 0.2.3
+  published: '2026-06-02'
+  repository: https://github.com/mrscraper-com/langchain-mrscraper
+  docs: https://docs.mrscraper.com/docs/integrations/langchain
+  description: Exposes the MrScraper API as LangChain BaseTool instances for agents.

@@ -1,0 +1,59 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/getting-started/cli
+name: mrscraper
+binary: mrscraper
+description: Terminal access to HTML fetching, AI extraction, Google SERP, saved scraper reruns, stored results and account usage; `init` also installs the four MrScraper agent skills into detected harnesses (claude-code, cursor, codex, grok, hermes, opencode, openclaw, pi, omp).
+docs: https://docs.mrscraper.com/docs/getting-started/cli
+repo: https://github.com/mrscraper-com/cli
+package: https://www.npmjs.com/package/@mrscraper/cli
+version: 0.3.2
+requirements: Node.js 20 or newer
+install:
+- npm install -g @mrscraper/cli@latest
+- npx -y @mrscraper/cli@latest init --all
+- npx -y @mrscraper/cli@latest init --agent codex
+- npx -y @mrscraper/cli@latest init --agent codex --yes --skip-auth
+commands:
+- name: init
+  group: setup
+  description: Install the CLI and skill pack for detected agent harnesses (--all, --agent <id>, --yes, --skip-auth, --api-key <key>); does not configure MCP.
+- name: login
+  group: auth
+  description: Browser login (--no-browser / --no-open for non-interactive use).
+- name: logout
+  group: auth
+  description: Remove stored credentials.
+- name: auth
+  group: auth
+  description: '`mrscraper auth status --json` reports the current credential state.'
+- name: fetch
+  group: scraping
+  description: Fetch rendered HTML for a known URL through the Web Renderer (GET https://api.mrscraper.com/).
+  operations: [fetchPage]
+- name: scrape
+  group: scraping
+  description: Run the general, listing or map AI agent for managed structured extraction (POST /api/v1/scrapers-ai).
+- name: serp
+  group: discovery
+  description: Google SERP query from a search term or Google URL (POST https://sync.scraper.mrscraper.com/api/google/serp/v2/sync).
+- name: rerun
+  group: scrapers
+  description: Rerun a saved AI or manual scraper for one URL or a bulk list.
+- name: results
+  group: results
+  description: List, filter, paginate and search stored results (GET /api/v1/results).
+- name: result
+  group: results
+  description: Retrieve one stored result by ID (GET /api/v1/results/{id}).
+- name: status
+  group: account
+  description: Subscription, quota, token usage and rate-limit status (GET /api/v1/subscription-accounts).
+  operations: [getSubscriptionAccounts]
+key_flows:
+- name: Agent bootstrap
+  steps: ['npx -y @mrscraper/cli@latest init --all --yes --skip-auth', 'mrscraper auth status --json', 'mrscraper login']
+- name: Fetch then extract
+  steps: ['mrscraper fetch <url>', 'mrscraper scrape <url> --prompt "..."']
+environment:
+- MRSCRAPER_API_KEY

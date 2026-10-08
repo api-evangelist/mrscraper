@@ -1,0 +1,68 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/getting-started/mcp-server
+status: official
+server:
+  name: MrScraper MCP
+  registry_name: io.github.mrscraper-com/mrscraper-mcp
+  version: 0.1.3
+  url: https://mcp.mrscraper.com/mcp
+  transport: streamable-http
+  docs: https://docs.mrscraper.com/docs/getting-started/mcp-server
+  repository: https://github.com/mrscraper-com/mrscraper-mcp
+  package: https://www.npmjs.com/package/@mrscraper/mcp
+  server_json: https://raw.githubusercontent.com/mrscraper-com/mrscraper-mcp/main/server.json
+  license: MIT
+deployment:
+  mode: both
+  endpoint: https://mcp.mrscraper.com/mcp
+  install: npx -y @mrscraper/mcp@latest
+  package: https://www.npmjs.com/package/@mrscraper/mcp
+  auth: oauth
+  verified: probed
+  note: POST tools/list and initialize to https://mcp.mrscraper.com/mcp on 2026-10-07 returned 401 {"error":"invalid_token"} with WWW-Authenticate resource_metadata=https://mcp.mrscraper.com/.well-known/oauth-protected-resource/mcp (served, 200). The hosted endpoint is OAuth 2.1 gated (API-key Bearer fallback documented); the stdio package reads MRSCRAPER_API_KEY. The tool list below is the provider's DOCUMENTED list (docs + src/tools.ts registerTool calls), not a live tools/list response.
+auth:
+  type: oauth2.1
+  resource: https://mcp.mrscraper.com/mcp
+  protected_resource_metadata: https://mcp.mrscraper.com/.well-known/oauth-protected-resource/mcp
+  authorization_server: https://api.app.mrscraper.com
+  authorization_server_metadata: https://api.app.mrscraper.com/.well-known/oauth-authorization-server
+  scopes: [scrape:read, scrape:write, account:read, offline_access]
+  pkce: S256
+  dynamic_client_registration: https://api.app.mrscraper.com/oauth/register
+  api_key_fallback: 'Authorization: Bearer <MrScraper API key> (full account authority; no scopes)'
+  insufficient_scope: 403 insufficient_scope
+tools:
+- name: fetch
+  title: Fetch Page
+  scope: scrape:read
+  description: Fetch page HTML using Web Renderer with browser rendering and proxy routing (GET https://api.mrscraper.com/).
+  rest: [fetchPage]
+- name: scrape
+  title: Extract Data
+  scope: scrape:write
+  description: Extract structured fields, listing records, or site maps with AI agents (POST https://api.app.mrscraper.com/api/v1/scrapers-ai).
+- name: serp
+  title: Google Search
+  scope: scrape:read
+  description: Query Google SERP for structured search engine results and page discovery (POST https://sync.scraper.mrscraper.com/api/google/serp/v2/sync).
+- name: status
+  title: Account Status
+  scope: account:read
+  description: Check subscription status, quota usage, rate limits, and token metrics (GET /api/v1/subscription-accounts; with `domain`, GET /api/v1/analytic/statuses).
+- name: rerun
+  title: Rerun Saved Scraper
+  scope: scrape:write
+  description: Execute new runs for saved AI or manual scraper configurations (POST /api/v1/scrapers-ai-rerun or /api/v1/scrapers-manual-rerun, bulk variants for URL lists).
+- name: results
+  title: List Results
+  scope: scrape:read
+  description: Browse, filter, paginate, and search stored MrScraper result collections (GET /api/v1/results).
+- name: result
+  title: Get Result
+  scope: scrape:read
+  description: Retrieve full output data and metadata for a single stored result by ID (GET /api/v1/results/{result_id}).
+response_envelope:
+  fields: [status_code, data, headers, error]
+  note: API-backed tools return the same envelope through MCP structuredContent; API failures set isError.
+clients_documented: [claude-code, cursor, codex, grok, hermes, opencode, openclaw, pi, omp, chatgpt, antigravity]

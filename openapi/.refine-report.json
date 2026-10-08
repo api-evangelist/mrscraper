@@ -1,0 +1,47 @@
+{
+  "provider": "mrscraper",
+  "sources": [
+    "_original/api.mrscraper.com-docs-doc.json",
+    "_ae-authored/mrscraper-openapi-generated.yml",
+    "mrscraper-scraper-service-gateway-openapi.yml"
+  ],
+  "outputs": [
+    "mrscraper-auth-api-openapi.yml",
+    "mrscraper-gateway-api-openapi.yml",
+    "mrscraper-jobs-api-openapi.yml",
+    "mrscraper-storage-api-openapi.yml",
+    "mrscraper-tasks-api-openapi.yml",
+    "mrscraper-analytic-api-openapi.yml",
+    "mrscraper-proxies-api-openapi.yml",
+    "mrscraper-results-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/mrscraper-scraper-service-gateway-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "api.mrscraper.com-docs-doc.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "api.mrscraper.com-docs-doc.json: declared missing tag: auth",
+    "api.mrscraper.com-docs-doc.json: declared missing tag: gateway",
+    "api.mrscraper.com-docs-doc.json: declared missing tag: jobs",
+    "api.mrscraper.com-docs-doc.json: declared missing tag: storage",
+    "api.mrscraper.com-docs-doc.json: declared missing tag: tasks",
+    "mrscraper-openapi-generated.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "mrscraper-openapi-generated.yml: tagged paths GET /api/v1/analytic/statuses -> Analytic",
+    "mrscraper-openapi-generated.yml: tagged paths GET /api/v1/proxies/user/requests-bandwidth -> Proxies",
+    "mrscraper-openapi-generated.yml: tagged paths GET /api/v1/results/{resultId} -> Results",
+    "mrscraper-openapi-generated.yml: declared missing tag: Analytic",
+    "mrscraper-openapi-generated.yml: declared missing tag: Proxies",
+    "mrscraper-openapi-generated.yml: declared missing tag: Results",
+    "mrscraper-scraper-service-gateway-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "tag 'auth' spans 2 source specs (api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml): per-path servers applied",
+    "tag 'gateway' spans 2 source specs (api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml): per-path servers applied",
+    "tag 'jobs' spans 2 source specs (api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml): per-path servers applied",
+    "tag 'storage' spans 2 source specs (api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml): per-path servers applied",
+    "tag 'tasks' spans 2 source specs (api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+8 apis, 10 total)"
+  ],
+  "skipped": []
+}

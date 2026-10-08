@@ -1,0 +1,32 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/integrations/webhook
+docs: https://docs.mrscraper.com/docs/integrations/webhook
+configuration: Dashboard (gear icon -> Webhooks -> +), then attached per scraper under Webhook Settings. No API endpoint for managing webhooks is documented.
+delivery:
+  methods: [POST, PUT]
+  custom_headers: true
+  signature: none documented
+  retries: none documented
+  content_type: application/json
+events:
+- name: scrape_completed
+  ui_label: Scraping Completed
+  description: Sent when a scraper run finishes; payload carries event, message, scraperId, scraperName, timestamp and a data block (userId, scraperId, type, url, status, error, tokenUsage, runtime, data as a JSON string).
+- name: scraping_started
+  ui_label: Scraping Started
+  description: Dashboard event option; the payload `event` value for this trigger is not shown in the docs.
+- name: scraping_failed
+  ui_label: Scraping Failed
+  description: Dashboard event option; the payload `event` value for this trigger is not shown in the docs.
+payload_example:
+  event: scrape_completed
+  message: Scraper completed successfully
+  scraperId: 53542173-0b75-4f86-b001-15b7dbbc2ee4
+  scraperName: All-in-One E-Commerce Laptop Test Site
+  timestamp: '2025-10-29T10:10:29.134Z'
+  data:
+    type: AI
+    status: Finished
+    error: null
+    tokenUsage: 4

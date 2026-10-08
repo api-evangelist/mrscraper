@@ -1,0 +1,1779 @@
+{
+    "schemes": [],
+    "swagger": "2.0",
+    "info": {
+        "description": "A clean architecture Go service for managing scraping tasks",
+        "title": "Scraper Service Gateway API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "api.mrscraper.com",
+    "basePath": "",
+    "paths": {
+        "/": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateway"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Target URL to forward to (URL encoded)",
+                        "name": "url",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "atk_example_not_a_real_token",
+                        "name": "token",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Queue the scrape and return a task ID immediately",
+                        "name": "async",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Use the sync scraper upstream via the beta flag (async, callbacks and stream are not supported yet)",
+                        "name": "beta",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Extract JSON from \u003cscript\u003e tags and metadata from \u003cmeta\u003e tags in HTML response",
+                        "name": "detectedJson",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "202": {
+                        "description": "Async scrape accepted",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/gateway.AsyncTaskResponse"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Location": {
+                                "type": "string",
+                                "description": "Task URL for checking the scrape status"
+                            },
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the async scrape"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "gateway"
+                ],
+                "parameters": [
+                    {
+                        "description": "Request body with domain, action, and task details",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/gateway.RequestBody"
+                        }
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Queue the scrape and return a task ID immediately",
+                        "name": "async",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Use the sync scraper upstream via the beta flag; alternatively set beta: true in the JSON body",
+                        "name": "beta",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "202": {
+                        "description": "Async scrape accepted",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/gateway.AsyncTaskResponse"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Location": {
+                                "type": "string",
+                                "description": "Task URL for checking the scrape status"
+                            },
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the async scrape"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/jobs": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jobs"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort field",
+                        "name": "sortField",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort order (ASC/DESC)",
+                        "name": "sortOrder",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search term",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date for created_at filter",
+                        "name": "startAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date for created_at filter",
+                        "name": "endAt",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Custom date range column",
+                        "name": "dateRangeColumn",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by status",
+                        "name": "status",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated jobs",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/job.Job"
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/definitions/api.TPaginationMeta"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jobs"
+                ],
+                "parameters": [
+                    {
+                        "description": "Job object (ID will be auto-generated, do not include)",
+                        "name": "job",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/job.Job"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Job created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/job.Job"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/jobs/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jobs"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Job ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Job retrieved",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/job.Job"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "jobs"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Job ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Job object",
+                        "name": "job",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/job.Job"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Job updated",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/job.Job"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/storage/{key}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Returns the stored body directly with application/json content type, without a message/data envelope. The key may contain multiple path segments and must belong to the authenticated user.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "storage"
+                ],
+                "summary": "Retrieve a stored result",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Full storage key, for example results/\u003cuser-scope\u003e/\u003cuuid\u003e.json",
+                        "name": "key",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Raw stored result body; its shape depends on the saved result"
+                    },
+                    "400": {
+                        "description": "Invalid storage key",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication required",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "403": {
+                        "description": "Result belongs to another user",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Result not found",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Result storage is temporarily unavailable",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "Retry-After": {
+                                "type": "string",
+                                "description": "Retry delay in seconds (5)"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/subscription-accounts": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Backoffice token to include database connection string",
+                        "name": "x-backoffice-token",
+                        "in": "header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Account information; user.databaseConnectionString is empty without a valid backoffice token",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/auth.SubscriptionAccount"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page size",
+                        "name": "pageSize",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort field",
+                        "name": "sortField",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort order (ASC/DESC)",
+                        "name": "sortOrder",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Search term",
+                        "name": "search",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date for created_at filter (RFC3339, YYYY-MM-DD HH:mm:ss, or YYYY-MM-DD; maximum range 7 days)",
+                        "name": "startAt",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date for created_at filter (RFC3339, YYYY-MM-DD HH:mm:ss, or YYYY-MM-DD; maximum range 7 days)",
+                        "name": "endAt",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Custom date range column",
+                        "name": "dateRangeColumn",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by domain",
+                        "name": "domain",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by action",
+                        "name": "action",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filter by status",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Filter by jobId",
+                        "name": "jobId",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter tokenUsage batch parent tasks",
+                        "name": "isParent",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Return only total count without loading task data",
+                        "name": "countOnly",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated tasks; countOnly=true returns an empty data array",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/task.Task"
+                                    }
+                                },
+                                "meta": {
+                                    "$ref": "#/definitions/api.TPaginationMeta"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "description": "Task object (ID will be auto-generated, do not include)",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.TaskSwagger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Task created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/task.Task"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the task write"
+                            }
+                        }
+                    },
+                    "202": {
+                        "description": "Task queued for a database retry; taskId is omitted when no ID has been reserved",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/task.TaskQueuedResponse"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the task write"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/bulk": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "description": "Array of tasks to update; each task must include its ID",
+                        "name": "tasks",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.BatchUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Updated tasks; originalTaskId appears only on tasks cloned from a locked period",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "tasks": {
+                                            "type": "array",
+                                            "items": {
+                                                "allOf": [
+                                                    {
+                                                        "$ref": "#/definitions/task.Task"
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "originalTaskId": {
+                                                                "type": "integer"
+                                                            }
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "updated": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "description": "Array of tasks to create",
+                        "name": "tasks",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.BatchCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Tasks created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/task.BatchCreateResponse"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Task ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Use json to decode the result body and include available callbackStatus/callbackError fields",
+                        "name": "result",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task envelope; data has Task fields, with result decoded as JSON when result=json",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Task ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Task object",
+                        "name": "task",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.TaskSwagger"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task updated",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/task.Task"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the task write"
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Task cloned from a locked period; originalTaskId identifies the preserved task",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/definitions/task.Task"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "originalTaskId": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the task write"
+                            }
+                        }
+                    },
+                    "202": {
+                        "description": "Queued: data is TaskQueuedResponse for a database retry, or Task when retrying an already queued child batch",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "object"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the task write"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}/status": {
+            "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    },
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "tasks"
+                ],
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Task ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Task status update object",
+                        "name": "statusUpdate",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/task.UpdateTaskStatusRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task status updated",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/task.Task"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the task write"
+                            }
+                        }
+                    },
+                    "201": {
+                        "description": "Task cloned from a locked period; originalTaskId identifies the preserved task",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/definitions/task.Task"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "originalTaskId": {
+                                                    "type": "integer"
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the task write"
+                            }
+                        }
+                    },
+                    "202": {
+                        "description": "Task status update queued for a database retry",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/task.TaskQueuedResponse"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "headers": {
+                            "X-Command-Id": {
+                                "type": "string",
+                                "description": "Command ID for tracing the task write"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "api.TPaginationMeta": {
+            "type": "object",
+            "properties": {
+                "page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "pageSize": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 2007199
+                },
+                "totalPage": {
+                    "type": "integer",
+                    "example": 200720
+                }
+            }
+        },
+        "auth.SubscriptionAccount": {
+            "type": "object",
+            "properties": {
+                "apiTokenName": {
+                    "type": "string"
+                },
+                "endsAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isEnterprise": {
+                    "type": "boolean"
+                },
+                "maxConcurrency": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "rateLimit": {
+                    "type": "integer"
+                },
+                "rateTtl": {
+                    "type": "integer"
+                },
+                "stripeStatus": {
+                    "type": "string"
+                },
+                "stripeSubscriptionId": {
+                    "type": "string"
+                },
+                "subscriptionItemId": {
+                    "type": "string"
+                },
+                "tokenLimit": {
+                    "type": "integer"
+                },
+                "tokenUsage": {
+                    "type": "integer"
+                },
+                "trialEndsAt": {
+                    "type": "string"
+                },
+                "user": {
+                    "$ref": "#/definitions/auth.User"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.User": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "avatar": {
+                    "type": "string"
+                },
+                "birthDate": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdById": {
+                    "type": "string"
+                },
+                "databaseConnectionString": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "type": "string"
+                },
+                "deletedById": {
+                    "type": "string"
+                },
+                "domainTargets": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "email": {
+                    "type": "string"
+                },
+                "gender": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "isVerified": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "onboardingCompletedAt": {
+                    "type": "string"
+                },
+                "otp": {},
+                "phoneNumber": {
+                    "type": "string"
+                },
+                "rabbitMqQueueName": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "updatedById": {
+                    "type": "string"
+                }
+            }
+        },
+        "gateway.AsyncTaskResponse": {
+            "type": "object",
+            "properties": {
+                "commandId": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "taskId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "gateway.RequestBody": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "example": "job_search"
+                },
+                "agent": {
+                    "type": "string",
+                    "example": "general"
+                },
+                "domain": {
+                    "type": "string",
+                    "example": "example.com"
+                },
+                "prompt": {
+                    "type": "string",
+                    "example": "get all property details"
+                },
+                "stream": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "task_details": {
+                    "type": "object"
+                },
+                "token_usage": {
+                    "type": "integer",
+                    "example": 42
+                },
+                "url": {
+                    "type": "string",
+                    "example": "https://example.com"
+                }
+            }
+        },
+        "job.Job": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string",
+                    "example": "2023-12-01T10:30:00Z"
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 12345
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Web Scraping Job"
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/job.JobStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2023-12-01T10:35:00Z"
+                },
+                "userId": {
+                    "type": "string",
+                    "example": "eb8b31cd-0208-4e5a-8bb9-ac57b5e1dc83"
+                }
+            }
+        },
+        "job.JobStatus": {
+            "type": "string",
+            "enum": [
+                "PENDING",
+                "PROCESSING",
+                "COMPLETED",
+                "FAILED"
+            ],
+            "x-enum-varnames": [
+                "StatusPending",
+                "StatusProcessing",
+                "StatusCompleted",
+                "StatusFailed"
+            ]
+        },
+        "task.BatchCreateRequest": {
+            "description": "Batch create request containing array of tasks",
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/task.TaskSwagger"
+                    }
+                }
+            }
+        },
+        "task.BatchCreateResponse": {
+            "description": "Response containing created tasks count and task details",
+            "type": "object",
+            "properties": {
+                "created": {
+                    "type": "integer",
+                    "example": 2
+                },
+                "tasks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/task.Task"
+                    }
+                }
+            }
+        },
+        "task.BatchUpdateRequest": {
+            "description": "Batch update request containing an array of task updates",
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/task.BatchUpdateTaskSwagger"
+                    }
+                }
+            }
+        },
+        "task.BatchUpdateTaskSwagger": {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "example": "scraping"
+                },
+                "browserType": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.BrowserType"
+                        }
+                    ],
+                    "example": "CHROME"
+                },
+                "callbackUrl": {
+                    "type": "string",
+                    "example": "https://api.example.com/webhook"
+                },
+                "deviceOs": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.DeviceOS"
+                        }
+                    ],
+                    "example": "WINDOWS"
+                },
+                "domain": {
+                    "type": "string",
+                    "example": "example.com"
+                },
+                "fingerprintId": {
+                    "type": "integer",
+                    "example": 101112
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1234
+                },
+                "jobId": {
+                    "type": "integer",
+                    "example": 987
+                },
+                "proxy": {
+                    "type": "string",
+                    "example": "user:password@127.0.0.1:8080"
+                },
+                "result": {
+                    "type": "string",
+                    "example": "s3://bucket/path/result.json"
+                },
+                "retryCount": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "scrapeTime": {
+                    "type": "number",
+                    "example": 2.5
+                },
+                "solution": {
+                    "type": "string",
+                    "example": "captcha_solution_token"
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.TaskStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Task queued for processing"
+                },
+                "taskDetails": {
+                    "type": "object"
+                },
+                "tokenUsage": {
+                    "type": "integer",
+                    "example": 42
+                }
+            }
+        },
+        "task.BrowserType": {
+            "type": "string",
+            "enum": [
+                "CHROME",
+                "FIREFOX",
+                "SAFARI"
+            ],
+            "x-enum-varnames": [
+                "BrowserChrome",
+                "BrowserFirefox",
+                "BrowserSafari"
+            ]
+        },
+        "task.DeviceOS": {
+            "type": "string",
+            "enum": [
+                "WINDOWS",
+                "MACOS",
+                "LINUX"
+            ],
+            "x-enum-varnames": [
+                "DeviceWindows",
+                "DeviceMacOS",
+                "DeviceLinux"
+            ]
+        },
+        "task.Task": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "example": "scraping"
+                },
+                "browserType": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.BrowserType"
+                        }
+                    ],
+                    "example": "CHROME"
+                },
+                "callbackUrl": {
+                    "type": "string",
+                    "example": "https://api.example.com/webhook"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2023-12-01T10:30:00Z"
+                },
+                "deviceOs": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.DeviceOS"
+                        }
+                    ],
+                    "example": "WINDOWS"
+                },
+                "domain": {
+                    "type": "string",
+                    "example": "example.com"
+                },
+                "fingerprintId": {
+                    "type": "integer",
+                    "example": 101112
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1234
+                },
+                "jobId": {
+                    "type": "integer",
+                    "example": 987
+                },
+                "proxy": {
+                    "type": "string",
+                    "example": "user:password@127.0.0.1:8080"
+                },
+                "result": {
+                    "type": "string",
+                    "example": "s3://bucket/path/result.json"
+                },
+                "retryCount": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "scrapeTime": {
+                    "type": "number",
+                    "example": 2.5
+                },
+                "solution": {
+                    "type": "string",
+                    "example": "captcha_solution_token"
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.TaskStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Task queued for processing"
+                },
+                "taskDetails": {
+                    "type": "object"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2023-12-01T10:35:00Z"
+                },
+                "userId": {
+                    "type": "string",
+                    "example": "user_123"
+                }
+            }
+        },
+        "task.TaskQueuedResponse": {
+            "type": "object",
+            "properties": {
+                "commandId": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "taskId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "task.TaskStatus": {
+            "type": "string",
+            "enum": [
+                "PENDING",
+                "PROCESSING",
+                "COMPLETED",
+                "FAILED"
+            ],
+            "x-enum-varnames": [
+                "StatusPending",
+                "StatusProcessing",
+                "StatusCompleted",
+                "StatusFailed"
+            ]
+        },
+        "task.TaskSwagger": {
+            "type": "object",
+            "properties": {
+                "action": {
+                    "type": "string",
+                    "example": "scraping"
+                },
+                "browserType": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.BrowserType"
+                        }
+                    ],
+                    "example": "CHROME"
+                },
+                "callbackUrl": {
+                    "type": "string",
+                    "example": "https://api.example.com/webhook"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "example": "2023-12-01T10:30:00Z"
+                },
+                "deviceOs": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.DeviceOS"
+                        }
+                    ],
+                    "example": "WINDOWS"
+                },
+                "domain": {
+                    "type": "string",
+                    "example": "example.com"
+                },
+                "fingerprintId": {
+                    "type": "integer",
+                    "example": 101112
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1234
+                },
+                "jobId": {
+                    "type": "integer",
+                    "example": 987
+                },
+                "proxy": {
+                    "type": "string",
+                    "example": "user:password@127.0.0.1:8080"
+                },
+                "result": {
+                    "type": "string",
+                    "example": "s3://bucket/path/result.json"
+                },
+                "retryCount": {
+                    "type": "integer",
+                    "example": 0
+                },
+                "scrapeTime": {
+                    "type": "number",
+                    "example": 2.5
+                },
+                "solution": {
+                    "type": "string",
+                    "example": "captcha_solution_token"
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.TaskStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                },
+                "statusMessage": {
+                    "type": "string",
+                    "example": "Task queued for processing"
+                },
+                "taskDetails": {
+                    "type": "object"
+                },
+                "tokenUsage": {
+                    "type": "integer",
+                    "example": 42
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "example": "2023-12-01T10:35:00Z"
+                },
+                "userId": {
+                    "type": "string",
+                    "example": "user_123"
+                }
+            }
+        },
+        "task.UpdateTaskStatusRequest": {
+            "type": "object",
+            "properties": {
+                "result": {
+                    "type": "string",
+                    "example": "s3url/path"
+                },
+                "solution": {
+                    "type": "string",
+                    "example": "scrapedo, scrapeless, etc"
+                },
+                "status": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/task.TaskStatus"
+                        }
+                    ],
+                    "example": "PENDING"
+                },
+                "taskDetails": {
+                    "type": "object"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "description": "atk_example_not_a_real_token",
+            "type": "apiKey",
+            "name": "x-api-token",
+            "in": "header"
+        },
+        "BearerAuth": {
+            "description": "\"Bearer \u003ctoken\u003e\" — a MrScraper API token, or an OAuth 2.1 access token issued by the platform for the MCP connector (scopes: scrape:read for GET /, scrape:write for POST /, account:read for GET /subscription-accounts).",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

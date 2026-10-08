@@ -1,0 +1,92 @@
+generated: '2026-10-07'
+method: searched
+source: https://mrscraper.com/pricing
+name: MrScraper pricing
+description: Token-metered Scraper plans (Free, Pro, Enterprise) with per-token overage, plus residential proxy bandwidth pricing.
+currency: USD
+audience: business-product
+pricing_basis: tiered-subscription
+published: true
+delivery:
+  delivery: managed
+plan_count: 4
+plans:
+- name: Free
+  price: 0
+  price_text: $0
+  billing_period: month
+  description: Get Started Free - No credit card required
+  features:
+  - 1,000 tokens included
+  - Unblock any website
+  - Include 10GB free residential proxy
+  - Manual and API-based scraping
+  - Marketplace scraping APIs
+  - AI-powered structured extraction
+  - Usage analytics and monitoring
+  - Scheduled and repeatable workflows
+  - Webhooks and workflow integrations
+  - CSV / structured-data friendly exports
+  limits:
+  - name: tokens included
+    limit_text: 1,000 tokens included
+    max: 1000
+  - name: Concurrent Requests
+    limit_text: Concurrent Requests
+    max: 10
+    source: https://docs.mrscraper.com/docs/getting-started/billing
+  overage:
+    price: 1
+    price_text: $1 per 1,000 tokens
+- name: Pro
+  price: 199
+  price_text: $199
+  billing_period: month
+  description: Most Popular Choice - Cancel anytime, Instant access
+  features:
+  - 200,000 tokens included
+  - Unblock any website
+  - Include 10GB free residential proxy
+  - Manual and API-based scraping
+  - Marketplace scraping APIs
+  - AI-powered structured extraction
+  - Usage analytics and monitoring
+  - Scheduled and repeatable workflows
+  - Webhooks and workflow integrations
+  - CSV / structured-data friendly exports
+  limits:
+  - name: tokens included
+    limit_text: 200,000 tokens included
+    max: 200000
+  - name: Concurrent Requests
+    limit_text: Concurrent Requests
+    max: 100
+    source: https://docs.mrscraper.com/docs/getting-started/billing
+  overage:
+    price: 1
+    price_text: $1 per 1,000 tokens
+- name: Scraper Enterprise
+  price: Book a Call
+  price_text: Book a Call
+  description: Enterprise Choice - Volume pricing, Custom integrations, Free proof of concept (POC) included, Dedicated support
+  features:
+  - Token plan tailored to your need
+  - Unblock any website
+  - Include 10GB free residential proxy
+  - Manual and API-based scraping
+  - Marketplace scraping APIs
+  - AI-powered structured extraction
+  - Usage analytics and monitoring
+  - Scheduled and repeatable workflows
+  - Webhooks and workflow integrations
+  - CSV / structured-data friendly exports
+  limits: []
+- name: Residential
+  price: 1.5
+  price_text: $1.5/GB
+  billing_period: per GB
+  description: Residential IPs with flexible bandwidth for reliable collection (the site navigation also says "Start from $1.25/GB").
+  features:
+  - Residential IPs with flexible bandwidth
+  limits: []
+note: Annual plans carry a 20% discount and tokens still reset monthly; unused tokens do not roll over (https://docs.mrscraper.com/docs/getting-started/billing). The billing docs table lists Scraper Free at "1,000 token" while its prose says "100 tokens per month" - the pricing page says 1,000.

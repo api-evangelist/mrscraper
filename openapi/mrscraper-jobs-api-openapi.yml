@@ -1,0 +1,254 @@
+openapi: 3.2.0
+info:
+  title: Mrscraper Jobs API
+  version: '1.0'
+  contact: {}
+  x-refined-note:
+  - x-original-format differs across the merged source definitions and was not carried
+  - x-original-url differs across the merged source definitions and was not carried
+  description: 'Operations tagged jobs across 2 of this provider''s published API definitions: api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.mrscraper.com
+tags:
+- name: Jobs
+paths:
+  /jobs:
+    get:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Jobs
+      parameters:
+      - description: Page size
+        name: pageSize
+        in: query
+        schema:
+          type: integer
+      - description: Page number
+        name: page
+        in: query
+        schema:
+          type: integer
+      - description: Sort field
+        name: sortField
+        in: query
+        schema:
+          type: string
+      - description: Sort order (ASC/DESC)
+        name: sortOrder
+        in: query
+        schema:
+          type: string
+      - description: Search term
+        name: search
+        in: query
+        schema:
+          type: string
+      - description: Start date for created_at filter
+        name: startAt
+        in: query
+        schema:
+          type: string
+      - description: End date for created_at filter
+        name: endAt
+        in: query
+        schema:
+          type: string
+      - description: Custom date range column
+        name: dateRangeColumn
+        in: query
+        schema:
+          type: string
+      - description: Filter by name
+        name: name
+        in: query
+        schema:
+          type: string
+      - description: Filter by status
+        name: status
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Paginated jobs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/job.Job'
+                  meta:
+                    $ref: '#/components/schemas/api.TPaginationMeta'
+      summary: Get jobs
+      x-summary-source: derived
+      operationId: listJobs
+      x-operation-id-source: derived
+    post:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Jobs
+      responses:
+        '201':
+          description: Job created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/job.Job'
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/job.Job'
+        description: Job object (ID will be auto-generated, do not include)
+        required: true
+      summary: Create jobs
+      x-summary-source: derived
+      operationId: createJob
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+  /jobs/{id}:
+    get:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Jobs
+      parameters:
+      - description: Job ID
+        name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Job retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/job.Job'
+                  message:
+                    type: string
+      summary: Get jobs by id
+      x-summary-source: derived
+      operationId: getJob
+      x-operation-id-source: derived
+    put:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Jobs
+      parameters:
+      - description: Job ID
+        name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Job updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/job.Job'
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/job.Job'
+        description: Job object
+        required: true
+      summary: Replace jobs by id
+      x-summary-source: derived
+      operationId: updateJob
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+components:
+  schemas:
+    job.Job:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          example: '2023-12-01T10:30:00Z'
+        id:
+          type: integer
+          example: 12345
+        name:
+          type: string
+          example: Web Scraping Job
+        status:
+          allOf:
+          - $ref: '#/components/schemas/job.JobStatus'
+          example: PENDING
+        updatedAt:
+          type: string
+          example: '2023-12-01T10:35:00Z'
+        userId:
+          type: string
+          example: eb8b31cd-0208-4e5a-8bb9-ac57b5e1dc83
+    api.TPaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        pageSize:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 2007199
+        totalPage:
+          type: integer
+          example: 200720
+    job.JobStatus:
+      type: string
+      enum:
+      - PENDING
+      - PROCESSING
+      - COMPLETED
+      - FAILED
+      x-enum-varnames:
+      - StatusPending
+      - StatusProcessing
+      - StatusCompleted
+      - StatusFailed
+  securitySchemes:
+    ApiKeyAuth:
+      description: atk_example_not_a_real_token
+      type: apiKey
+      name: x-api-token
+      in: header
+    BearerAuth:
+      description: '"Bearer <token>" — a MrScraper API token, or an OAuth 2.1 access token issued by the platform for the MCP connector (scopes: scrape:read for GET /, scrape:write for POST /, account:read for GET /subscription-accounts).'
+      type: apiKey
+      name: Authorization
+      in: header
+x-refined-from:
+- api.mrscraper.com-docs-doc.json
+- mrscraper-scraper-service-gateway-openapi.yml

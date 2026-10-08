@@ -1,0 +1,187 @@
+openapi: 3.2.0
+info:
+  title: Mrscraper Gateway API
+  version: '1.0'
+  contact: {}
+  x-refined-note:
+  - x-original-format differs across the merged source definitions and was not carried
+  - x-original-url differs across the merged source definitions and was not carried
+  description: 'Operations tagged gateway across 2 of this provider''s published API definitions: api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.mrscraper.com
+tags:
+- name: Gateway
+paths:
+  /:
+    get:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Gateway
+      parameters:
+      - description: Target URL to forward to (URL encoded)
+        name: url
+        in: query
+        required: true
+        schema:
+          type: string
+      - description: atk_example_not_a_real_token
+        name: token
+        in: query
+        schema:
+          type: string
+      - description: Queue the scrape and return a task ID immediately
+        name: async
+        in: query
+        schema:
+          type: boolean
+      - description: Use the sync scraper upstream via the beta flag (async, callbacks and stream are not supported yet)
+        name: beta
+        in: query
+        schema:
+          type: boolean
+      - description: Extract JSON from <script> tags and metadata from <meta> tags in HTML response
+        name: detectedJson
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '202':
+          description: Async scrape accepted
+          headers:
+            Location:
+              description: Task URL for checking the scrape status
+              schema:
+                type: string
+            X-Command-Id:
+              description: Command ID for tracing the async scrape
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/gateway.AsyncTaskResponse'
+                  message:
+                    type: string
+      summary: Get
+      x-summary-source: derived
+      operationId: fetchPage
+      x-operation-id-source: derived
+    post:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Gateway
+      parameters:
+      - description: Queue the scrape and return a task ID immediately
+        name: async
+        in: query
+        schema:
+          type: boolean
+      - description: 'Use the sync scraper upstream via the beta flag; alternatively set beta: true in the JSON body'
+        name: beta
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        '202':
+          description: Async scrape accepted
+          headers:
+            Location:
+              description: Task URL for checking the scrape status
+              schema:
+                type: string
+            X-Command-Id:
+              description: Command ID for tracing the async scrape
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/gateway.AsyncTaskResponse'
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/gateway.RequestBody'
+        description: Request body with domain, action, and task details
+        required: true
+      summary: Create
+      x-summary-source: derived
+      operationId: runScraper
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+components:
+  schemas:
+    gateway.AsyncTaskResponse:
+      type: object
+      properties:
+        commandId:
+          type: string
+        status:
+          type: string
+        taskId:
+          type: integer
+    gateway.RequestBody:
+      type: object
+      properties:
+        action:
+          type: string
+          example: job_search
+        agent:
+          type: string
+          example: general
+        domain:
+          type: string
+          example: example.com
+        prompt:
+          type: string
+          example: get all property details
+        stream:
+          type: boolean
+          example: false
+        task_details:
+          type: object
+        token_usage:
+          type: integer
+          example: 42
+        url:
+          type: string
+          example: https://example.com
+  securitySchemes:
+    ApiKeyAuth:
+      description: atk_example_not_a_real_token
+      type: apiKey
+      name: x-api-token
+      in: header
+    BearerAuth:
+      description: '"Bearer <token>" — a MrScraper API token, or an OAuth 2.1 access token issued by the platform for the MCP connector (scopes: scrape:read for GET /, scrape:write for POST /, account:read for GET /subscription-accounts).'
+      type: apiKey
+      name: Authorization
+      in: header
+x-refined-from:
+- api.mrscraper.com-docs-doc.json
+- mrscraper-scraper-service-gateway-openapi.yml

@@ -1,0 +1,67 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist overlay for the MrScraper Scraper Service Gateway API
+  version: 1.0.0
+  x-generated: '2026-10-07'
+  x-method: generated
+extends: ../openapi/_original/mrscraper-scraper-service-gateway-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-original-format: swagger-2.0
+    x-original-url: https://api.mrscraper.com/docs/doc.json
+    x-apievangelist-note: Converted from Swagger 2.0 to OpenAPI 3.0.3; operationIds were absent in the original and were added here.
+- target: $.servers
+  update:
+  - url: https://api.mrscraper.com
+    description: Scraper API gateway (GET / = Web Renderer fetch, POST / = agent scraping)
+- target: $.paths['/'].get
+  update:
+    operationId: fetchPage
+    summary: Fetch a page through the Web Renderer (Scraper API)
+    x-docs: https://docs.mrscraper.com/docs/getting-started/scraper-api
+- target: $.paths['/'].post
+  update:
+    operationId: runScraper
+    summary: Run a scraper agent against a URL (Scraper API)
+    x-docs: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+- target: $.paths['/subscription-accounts'].get
+  update:
+    operationId: getSubscriptionAccounts
+    x-docs: https://docs.mrscraper.com/docs/api/v3/authentication/verify-token
+- target: $.paths['/jobs'].get
+  update:
+    operationId: listJobs
+- target: $.paths['/jobs'].post
+  update:
+    operationId: createJob
+- target: $.paths['/jobs/{id}'].get
+  update:
+    operationId: getJob
+- target: $.paths['/jobs/{id}'].put
+  update:
+    operationId: updateJob
+- target: $.paths['/storage/{key}'].get
+  update:
+    operationId: getStoredResult
+- target: $.paths['/tasks'].get
+  update:
+    operationId: listTasks
+- target: $.paths['/tasks'].post
+  update:
+    operationId: createTask
+- target: $.paths['/tasks/bulk'].put
+  update:
+    operationId: updateTasksBulk
+- target: $.paths['/tasks/bulk'].post
+  update:
+    operationId: createTasksBulk
+- target: $.paths['/tasks/{id}'].get
+  update:
+    operationId: getTask
+- target: $.paths['/tasks/{id}'].put
+  update:
+    operationId: updateTask
+- target: $.paths['/tasks/{id}/status'].put
+  update:
+    operationId: updateTaskStatus

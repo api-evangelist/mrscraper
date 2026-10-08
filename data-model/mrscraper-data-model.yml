@@ -1,0 +1,59 @@
+generated: '2026-10-07'
+method: derived
+generator: derive-data-model.py
+source:
+- openapi/mrscraper-scraper-service-gateway-openapi.yml
+notation: has_one = property $ref; has_many = array of $ref; belongs_to = <entity>_id field
+summary:
+  entities: 14
+  entities_in_spec: 14
+  relationships: 4
+entities:
+- name: api.TPaginationMeta
+  fields: 4
+- name: auth.SubscriptionAccount
+  fields: 16
+- name: auth.User
+  fields: 20
+- name: gateway.AsyncTaskResponse
+  fields: 3
+- name: gateway.RequestBody
+  fields: 8
+- name: job.Job
+  fields: 6
+- name: task.BatchCreateRequest
+  fields: 1
+  description: Batch create request containing array of tasks
+- name: task.BatchCreateResponse
+  fields: 2
+  description: Response containing created tasks count and task details
+- name: task.BatchUpdateRequest
+  fields: 1
+  description: Batch update request containing an array of task updates
+- name: task.BatchUpdateTaskSwagger
+  fields: 17
+- name: task.Task
+  fields: 19
+- name: task.TaskQueuedResponse
+  fields: 3
+- name: task.TaskSwagger
+  fields: 20
+- name: task.UpdateTaskStatusRequest
+  fields: 4
+relationships:
+- from: auth.SubscriptionAccount
+  to: auth.User
+  type: has_one
+  via: user
+- from: task.BatchCreateRequest
+  to: task.TaskSwagger
+  type: has_many
+  via: data
+- from: task.BatchCreateResponse
+  to: task.Task
+  type: has_many
+  via: tasks
+- from: task.BatchUpdateRequest
+  to: task.BatchUpdateTaskSwagger
+  type: has_many
+  via: data

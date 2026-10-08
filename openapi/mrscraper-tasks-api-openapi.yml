@@ -1,0 +1,732 @@
+openapi: 3.2.0
+info:
+  title: Mrscraper Tasks API
+  version: '1.0'
+  contact: {}
+  x-refined-note:
+  - x-original-format differs across the merged source definitions and was not carried
+  - x-original-url differs across the merged source definitions and was not carried
+  description: 'Operations tagged tasks across 2 of this provider''s published API definitions: api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.mrscraper.com
+tags:
+- name: Tasks
+paths:
+  /tasks:
+    get:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Tasks
+      parameters:
+      - description: Page size
+        name: pageSize
+        in: query
+        schema:
+          type: integer
+      - description: Page number
+        name: page
+        in: query
+        schema:
+          type: integer
+      - description: Sort field
+        name: sortField
+        in: query
+        schema:
+          type: string
+      - description: Sort order (ASC/DESC)
+        name: sortOrder
+        in: query
+        schema:
+          type: string
+      - description: Search term
+        name: search
+        in: query
+        schema:
+          type: string
+      - description: Start date for created_at filter (RFC3339, YYYY-MM-DD HH:mm:ss, or YYYY-MM-DD; maximum range 7 days)
+        name: startAt
+        in: query
+        required: true
+        schema:
+          type: string
+      - description: End date for created_at filter (RFC3339, YYYY-MM-DD HH:mm:ss, or YYYY-MM-DD; maximum range 7 days)
+        name: endAt
+        in: query
+        required: true
+        schema:
+          type: string
+      - description: Custom date range column
+        name: dateRangeColumn
+        in: query
+        schema:
+          type: string
+      - description: Filter by domain
+        name: domain
+        in: query
+        schema:
+          type: string
+      - description: Filter by action
+        name: action
+        in: query
+        schema:
+          type: string
+      - description: Filter by status
+        name: status
+        in: query
+        schema:
+          type: string
+      - description: Filter by jobId
+        name: jobId
+        in: query
+        schema:
+          type: integer
+      - description: Filter tokenUsage batch parent tasks
+        name: isParent
+        in: query
+        schema:
+          type: boolean
+      - description: Return only total count without loading task data
+        name: countOnly
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Paginated tasks; countOnly=true returns an empty data array
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/task.Task'
+                  meta:
+                    $ref: '#/components/schemas/api.TPaginationMeta'
+      summary: Get tasks
+      x-summary-source: derived
+      operationId: listTasks
+      x-operation-id-source: derived
+    post:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Tasks
+      responses:
+        '201':
+          description: Task created
+          headers:
+            X-Command-Id:
+              description: Command ID for tracing the task write
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/task.Task'
+                  message:
+                    type: string
+        '202':
+          description: Task queued for a database retry; taskId is omitted when no ID has been reserved
+          headers:
+            X-Command-Id:
+              description: Command ID for tracing the task write
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/task.TaskQueuedResponse'
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task.TaskSwagger'
+        description: Task object (ID will be auto-generated, do not include)
+        required: true
+      summary: Create tasks
+      x-summary-source: derived
+      operationId: createTask
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+  /tasks/bulk:
+    put:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Tasks
+      responses:
+        '200':
+          description: Updated tasks; originalTaskId appears only on tasks cloned from a locked period
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      tasks:
+                        type: array
+                        items:
+                          allOf:
+                          - $ref: '#/components/schemas/task.Task'
+                          - type: object
+                            properties:
+                              originalTaskId:
+                                type: integer
+                      updated:
+                        type: integer
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task.BatchUpdateRequest'
+        description: Array of tasks to update; each task must include its ID
+        required: true
+      summary: Replace tasks bulk
+      x-summary-source: derived
+      operationId: updateTasksBulk
+      x-operation-id-source: derived
+    post:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Tasks
+      responses:
+        '201':
+          description: Tasks created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/task.BatchCreateResponse'
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task.BatchCreateRequest'
+        description: Array of tasks to create
+        required: true
+      summary: Create tasks bulk
+      x-summary-source: derived
+      operationId: createTasksBulk
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+  /tasks/{id}:
+    get:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Tasks
+      parameters:
+      - description: Task ID
+        name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      - description: Use json to decode the result body and include available callbackStatus/callbackError fields
+        name: result
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Task envelope; data has Task fields, with result decoded as JSON when result=json
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+      summary: Get tasks by id
+      x-summary-source: derived
+      operationId: getTask
+      x-operation-id-source: derived
+    put:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Tasks
+      parameters:
+      - description: Task ID
+        name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Task updated
+          headers:
+            X-Command-Id:
+              description: Command ID for tracing the task write
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/task.Task'
+                  message:
+                    type: string
+        '201':
+          description: Task cloned from a locked period; originalTaskId identifies the preserved task
+          headers:
+            X-Command-Id:
+              description: Command ID for tracing the task write
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/task.Task'
+                    - type: object
+                      properties:
+                        originalTaskId:
+                          type: integer
+                  message:
+                    type: string
+        '202':
+          description: 'Queued: data is TaskQueuedResponse for a database retry, or Task when retrying an already queued child batch'
+          headers:
+            X-Command-Id:
+              description: Command ID for tracing the task write
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task.TaskSwagger'
+        description: Task object
+        required: true
+      summary: Replace tasks by id
+      x-summary-source: derived
+      operationId: updateTask
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+  /tasks/{id}/status:
+    put:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Tasks
+      parameters:
+      - description: Task ID
+        name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Task status updated
+          headers:
+            X-Command-Id:
+              description: Command ID for tracing the task write
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/task.Task'
+                  message:
+                    type: string
+        '201':
+          description: Task cloned from a locked period; originalTaskId identifies the preserved task
+          headers:
+            X-Command-Id:
+              description: Command ID for tracing the task write
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    allOf:
+                    - $ref: '#/components/schemas/task.Task'
+                    - type: object
+                      properties:
+                        originalTaskId:
+                          type: integer
+                  message:
+                    type: string
+        '202':
+          description: Task status update queued for a database retry
+          headers:
+            X-Command-Id:
+              description: Command ID for tracing the task write
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/task.TaskQueuedResponse'
+                  message:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/task.UpdateTaskStatusRequest'
+        description: Task status update object
+        required: true
+      summary: Replace tasks by id status
+      x-summary-source: derived
+      operationId: updateTaskStatus
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+components:
+  schemas:
+    task.BatchCreateRequest:
+      description: Batch create request containing array of tasks
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/task.TaskSwagger'
+    task.TaskQueuedResponse:
+      type: object
+      properties:
+        commandId:
+          type: string
+        status:
+          type: string
+        taskId:
+          type: integer
+    task.DeviceOS:
+      type: string
+      enum:
+      - WINDOWS
+      - MACOS
+      - LINUX
+      x-enum-varnames:
+      - DeviceWindows
+      - DeviceMacOS
+      - DeviceLinux
+    task.BrowserType:
+      type: string
+      enum:
+      - CHROME
+      - FIREFOX
+      - SAFARI
+      x-enum-varnames:
+      - BrowserChrome
+      - BrowserFirefox
+      - BrowserSafari
+    task.Task:
+      type: object
+      properties:
+        action:
+          type: string
+          example: scraping
+        browserType:
+          allOf:
+          - $ref: '#/components/schemas/task.BrowserType'
+          example: CHROME
+        callbackUrl:
+          type: string
+          example: https://api.example.com/webhook
+        createdAt:
+          type: string
+          example: '2023-12-01T10:30:00Z'
+        deviceOs:
+          allOf:
+          - $ref: '#/components/schemas/task.DeviceOS'
+          example: WINDOWS
+        domain:
+          type: string
+          example: example.com
+        fingerprintId:
+          type: integer
+          example: 101112
+        id:
+          type: integer
+          example: 1234
+        jobId:
+          type: integer
+          example: 987
+        proxy:
+          type: string
+          example: user:password@127.0.0.1:8080
+        result:
+          type: string
+          example: s3://bucket/path/result.json
+        retryCount:
+          type: integer
+          example: 0
+        scrapeTime:
+          type: number
+          example: 2.5
+        solution:
+          type: string
+          example: captcha_solution_token
+        status:
+          allOf:
+          - $ref: '#/components/schemas/task.TaskStatus'
+          example: PENDING
+        statusMessage:
+          type: string
+          example: Task queued for processing
+        taskDetails:
+          type: object
+        updatedAt:
+          type: string
+          example: '2023-12-01T10:35:00Z'
+        userId:
+          type: string
+          example: user_123
+    task.UpdateTaskStatusRequest:
+      type: object
+      properties:
+        result:
+          type: string
+          example: s3url/path
+        solution:
+          type: string
+          example: scrapedo, scrapeless, etc
+        status:
+          allOf:
+          - $ref: '#/components/schemas/task.TaskStatus'
+          example: PENDING
+        taskDetails:
+          type: object
+    api.TPaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        pageSize:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 2007199
+        totalPage:
+          type: integer
+          example: 200720
+    task.TaskSwagger:
+      type: object
+      properties:
+        action:
+          type: string
+          example: scraping
+        browserType:
+          allOf:
+          - $ref: '#/components/schemas/task.BrowserType'
+          example: CHROME
+        callbackUrl:
+          type: string
+          example: https://api.example.com/webhook
+        createdAt:
+          type: string
+          example: '2023-12-01T10:30:00Z'
+        deviceOs:
+          allOf:
+          - $ref: '#/components/schemas/task.DeviceOS'
+          example: WINDOWS
+        domain:
+          type: string
+          example: example.com
+        fingerprintId:
+          type: integer
+          example: 101112
+        id:
+          type: integer
+          example: 1234
+        jobId:
+          type: integer
+          example: 987
+        proxy:
+          type: string
+          example: user:password@127.0.0.1:8080
+        result:
+          type: string
+          example: s3://bucket/path/result.json
+        retryCount:
+          type: integer
+          example: 0
+        scrapeTime:
+          type: number
+          example: 2.5
+        solution:
+          type: string
+          example: captcha_solution_token
+        status:
+          allOf:
+          - $ref: '#/components/schemas/task.TaskStatus'
+          example: PENDING
+        statusMessage:
+          type: string
+          example: Task queued for processing
+        taskDetails:
+          type: object
+        tokenUsage:
+          type: integer
+          example: 42
+        updatedAt:
+          type: string
+          example: '2023-12-01T10:35:00Z'
+        userId:
+          type: string
+          example: user_123
+    task.TaskStatus:
+      type: string
+      enum:
+      - PENDING
+      - PROCESSING
+      - COMPLETED
+      - FAILED
+      x-enum-varnames:
+      - StatusPending
+      - StatusProcessing
+      - StatusCompleted
+      - StatusFailed
+    task.BatchCreateResponse:
+      description: Response containing created tasks count and task details
+      type: object
+      properties:
+        created:
+          type: integer
+          example: 2
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/task.Task'
+    task.BatchUpdateTaskSwagger:
+      type: object
+      required:
+      - id
+      properties:
+        action:
+          type: string
+          example: scraping
+        browserType:
+          allOf:
+          - $ref: '#/components/schemas/task.BrowserType'
+          example: CHROME
+        callbackUrl:
+          type: string
+          example: https://api.example.com/webhook
+        deviceOs:
+          allOf:
+          - $ref: '#/components/schemas/task.DeviceOS'
+          example: WINDOWS
+        domain:
+          type: string
+          example: example.com
+        fingerprintId:
+          type: integer
+          example: 101112
+        id:
+          type: integer
+          example: 1234
+        jobId:
+          type: integer
+          example: 987
+        proxy:
+          type: string
+          example: user:password@127.0.0.1:8080
+        result:
+          type: string
+          example: s3://bucket/path/result.json
+        retryCount:
+          type: integer
+          example: 0
+        scrapeTime:
+          type: number
+          example: 2.5
+        solution:
+          type: string
+          example: captcha_solution_token
+        status:
+          allOf:
+          - $ref: '#/components/schemas/task.TaskStatus'
+          example: PENDING
+        statusMessage:
+          type: string
+          example: Task queued for processing
+        taskDetails:
+          type: object
+        tokenUsage:
+          type: integer
+          example: 42
+    task.BatchUpdateRequest:
+      description: Batch update request containing an array of task updates
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/task.BatchUpdateTaskSwagger'
+  securitySchemes:
+    ApiKeyAuth:
+      description: atk_example_not_a_real_token
+      type: apiKey
+      name: x-api-token
+      in: header
+    BearerAuth:
+      description: '"Bearer <token>" — a MrScraper API token, or an OAuth 2.1 access token issued by the platform for the MCP connector (scopes: scrape:read for GET /, scrape:write for POST /, account:read for GET /subscription-accounts).'
+      type: apiKey
+      name: Authorization
+      in: header
+x-refined-from:
+- api.mrscraper.com-docs-doc.json
+- mrscraper-scraper-service-gateway-openapi.yml

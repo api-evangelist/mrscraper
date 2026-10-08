@@ -1,0 +1,105 @@
+generated: '2026-10-07'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/mrscraper-scraper-service-gateway-openapi.yml
+vocabulary:
+  name: MrScraper Domain Vocabulary
+  description: 'Terms declared by MrScraper''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-07'
+  terms:
+  - term: api.TPaginationMeta
+    definition: 'Object declared by the contract with fields: page, pageSize, total, totalPage.'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/api.TPaginationMeta
+  - term: auth.SubscriptionAccount
+    definition: 'Object declared by the contract with fields: apiTokenName, endsAt, id, isEnterprise, maxConcurrency, quantity, rateLimit, rateTtl,
+      stripeStatus, stripeSubscriptionId, subscriptionItemId, tokenLimit. (4 more)'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/auth.SubscriptionAccount
+  - term: auth.User
+    definition: 'Object declared by the contract with fields: address, avatar, birthDate, createdAt, createdById, databaseConnectionString, deletedAt,
+      deletedById, domainTargets, email, gender, id. (8 more)'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/auth.User
+  - term: gateway.AsyncTaskResponse
+    definition: 'Object declared by the contract with fields: commandId, status, taskId.'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/gateway.AsyncTaskResponse
+  - term: gateway.RequestBody
+    definition: 'Object declared by the contract with fields: action, agent, domain, prompt, stream, task_details, token_usage, url.'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/gateway.RequestBody
+  - term: job.Job
+    definition: 'Object declared by the contract with fields: createdAt, id, name, status, updatedAt, userId.'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/job.Job
+  - term: job.JobStatus
+    definition: 'Enumeration declared by the contract with values: PENDING, PROCESSING, COMPLETED, FAILED.'
+    tags:
+    - Enumeration
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/job.JobStatus
+  - term: task.BatchCreateRequest
+    definition: Batch create request containing array of tasks
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.BatchCreateRequest
+  - term: task.BatchCreateResponse
+    definition: Response containing created tasks count and task details
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.BatchCreateResponse
+  - term: task.BatchUpdateRequest
+    definition: Batch update request containing an array of task updates
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.BatchUpdateRequest
+  - term: task.BatchUpdateTaskSwagger
+    definition: 'Object declared by the contract with fields: action, browserType, callbackUrl, deviceOs, domain, fingerprintId, id, jobId, proxy,
+      result, retryCount, scrapeTime. (5 more)'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.BatchUpdateTaskSwagger
+  - term: task.BrowserType
+    definition: 'Enumeration declared by the contract with values: CHROME, FIREFOX, SAFARI.'
+    tags:
+    - Enumeration
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.BrowserType
+  - term: task.DeviceOS
+    definition: 'Enumeration declared by the contract with values: WINDOWS, MACOS, LINUX.'
+    tags:
+    - Enumeration
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.DeviceOS
+  - term: task.Task
+    definition: 'Object declared by the contract with fields: action, browserType, callbackUrl, createdAt, deviceOs, domain, fingerprintId, id,
+      jobId, proxy, result, retryCount. (7 more)'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.Task
+  - term: task.TaskQueuedResponse
+    definition: 'Object declared by the contract with fields: commandId, status, taskId.'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.TaskQueuedResponse
+  - term: task.TaskStatus
+    definition: 'Enumeration declared by the contract with values: PENDING, PROCESSING, COMPLETED, FAILED.'
+    tags:
+    - Enumeration
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.TaskStatus
+  - term: task.TaskSwagger
+    definition: 'Object declared by the contract with fields: action, browserType, callbackUrl, createdAt, deviceOs, domain, fingerprintId, id,
+      jobId, proxy, result, retryCount. (8 more)'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.TaskSwagger
+  - term: task.UpdateTaskStatusRequest
+    definition: 'Object declared by the contract with fields: result, solution, status, taskDetails.'
+    tags:
+    - Object
+    source: openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.UpdateTaskStatusRequest

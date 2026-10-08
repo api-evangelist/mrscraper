@@ -1,0 +1,122 @@
+# MrScraper Docs
+
+## api
+- [Authentication](https://docs.mrscraper.com/docs/api/authentication): Learn how to authenticate requests to the MrScraper API using API tokens and request headers.
+- [Error Handling](https://docs.mrscraper.com/docs/api/error-handling): Learn how the MrScraper API reports errors, including common error codes, response formats, and best practices for handling them in your app.
+- [API Overview](https://docs.mrscraper.com/docs/api/overview): Comprehensive documentation for MrScraper's API endpoints, including authentication, pagination, error handling, and scraper management.
+- [Pagination](https://docs.mrscraper.com/docs/api/pagination): Understand how pagination works in the MrScraper API, including parameters for controlling page size and navigating through large datasets.
+- [Response Headers](https://docs.mrscraper.com/docs/api/response-headers): Learn how to monitor token usage, bandwidth usage, execution runtime, and target HTTP status codes returned in API response headers.
+- [Get Screenshot](https://docs.mrscraper.com/docs/api/scraper-api/get-screenshot): Capture full-page or viewport screenshots of dynamic, JavaScript-rendered pages with the Get Screenshot endpoint, with real browser rendering enabled by default.
+- [Listing Page](https://docs.mrscraper.com/docs/api/scraper-api/listing-page): Extract paginated item lists, catalog grids, and search results in one run with the Listing Page endpoint, handling numbered pages, scrolling, and Load More.
+- [Scrape JSON](https://docs.mrscraper.com/docs/api/scraper-api/scrape-json): Extract structured, strongly-typed JSON from a single page with the Scrape JSON endpoint, using a natural language prompt instead of CSS selectors or XPath.
+- [Scrape Markdown](https://docs.mrscraper.com/docs/api/scraper-api/scrape-markdown): Convert any web page into clean, LLM-friendly Markdown with the Scrape Markdown endpoint, stripping navigation, scripts, and ads for token-efficient AI input.
+- [Scrape Sitemap](https://docs.mrscraper.com/docs/api/scraper-api/scrape-sitemap): Crawl target sites with the Scrape Sitemap endpoint to discover endpoints, map URL architecture, and generate seed URL lists before running bulk extraction jobs.
+- [Get Proxy Requests Bandwidth](https://docs.mrscraper.com/docs/api/v3/analytic/proxy): Retrieve total proxy bandwidth usage aggregated per proxy username within a given date range using the MrScraper API.
+- [Get Analytic Statuses](https://docs.mrscraper.com/docs/api/v3/analytic/status): Retrieve scrape status counts for a domain within a date range using the MrScraper API, with optional action and API token name filters.
+- [Get All Results](https://docs.mrscraper.com/docs/api/v3/result/all): Retrieve all scraping results with data, status, token usage, and file paths using the MrScraper API, with sorting, filtering, and date ranges.
+- [Get a Detailed Result](https://docs.mrscraper.com/docs/api/v3/result/detail): Retrieve detailed information for a single scraping result by its unique identifier with the MrScraper API, including data, status, and token usage.
+- [Verify API Token](https://docs.mrscraper.com/docs/api/v3/authentication/verify-token): Verify your API token and retrieve subscription account information, including token usage, limits, and billing details, with the MrScraper API.
+- [AI Scraper Response](https://docs.mrscraper.com/docs/api/v3/scraper/ai-response): Learn the response structure of the AI Scraper API, from the standard wrapper to the agent-specific data field, and how to interpret the results.
+- [Web Unblocker](https://docs.mrscraper.com/docs/api/v3/scraper/unblocker-scraping): Retrieve the raw HTML of any webpage with the Web Unblocker endpoint, supporting browser rendering, geo-targeting, and waiting for DOM selectors.
+- [Create and Run AI Scraper](https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init): Create and run a new AI Scraper from natural language instructions using the MrScraper API, then save the scraperId to rerun it later.
+- [Bulk Rerun AI Scraper](https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-rerun-bulk): Run an AI Scraper across multiple URLs at once with the MrScraper API, then poll the bulkResultId for merged data and per-URL status.
+- [Rerun an AI Scraper](https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-rerun): Rerun an existing AI Scraper by scraperId and url with the MrScraper API, reusing cached results to cut token usage and execution time.
+- [Cancel One Bulk Result by Result ID](https://docs.mrscraper.com/docs/api/v3/scraper/bulk/cancel-bulk-by-result-id): Cancel a running bulk scraping job using the bulk result ID returned from the bulk rerun response, with the MrScraper API.
+- [Cancel All Bulk Results by Scraper ID](https://docs.mrscraper.com/docs/api/v3/scraper/bulk/cancel-bulk-by-scraper-id): Cancel the remaining pending URLs of a running bulk scraping job by scraper ID, using a single PATCH request to the MrScraper API endpoint.
+- [Self-Heal a Manual Scraper](https://docs.mrscraper.com/docs/api/v3/scraper/manual/manual-heal): Ask AI to repair a Manual Scraper workflow with the MrScraper API when a target website changes its markup and the scraper returns empty data.
+- [Bulk Rerun Manual Scraper](https://docs.mrscraper.com/docs/api/v3/scraper/manual/manual-rerun-bulk): Run a Manual Scraper across multiple URLs at once with the MrScraper API, then poll the bulkResultId for the asynchronous results.
+- [Rerun a Manual Scraper](https://docs.mrscraper.com/docs/api/v3/scraper/manual/manual-rerun): Rerun an existing Manual Scraper by scraperId and url with the MrScraper API, reusing cached results to cut token usage and runtime.
+
+## features
+- [Workflow API Access](https://docs.mrscraper.com/docs/features/activating-api): Learn how to run any scraper you have created through a MrScraper API endpoint, so you can automate scraping or integrate it into your application.
+- [Bulk Scraping](https://docs.mrscraper.com/docs/features/bulk-scraping): Learn how to extract data from many URLs in one operation with Bulk Scraping, applying the same scraper configuration to an entire uploaded list.
+- [Cookie](https://docs.mrscraper.com/docs/features/cookie): Learn how to add your own cookies to a MrScraper scraper so it can reach content that is restricted, personalized, or behind a login session.
+- [Marketplace](https://docs.mrscraper.com/docs/features/marketplace): Discover ready-to-use MrScraper scrapers for popular platforms, runnable directly from the dashboard or in your applications using pre-built request snippets.
+- [Proxy](https://docs.mrscraper.com/docs/features/proxy): Configure proxy routing on your individual scrapers to mask your IP, bypass geo-restrictions, and improve scraping reliability.
+- [S3 Storage](https://docs.mrscraper.com/docs/features/s3-storage): Learn how to save MrScraper results to an S3 bucket, keep a durable copy of every file, and return a signed URL instead of a large response.
+- [Schedule](https://docs.mrscraper.com/docs/features/schedule): Learn how to schedule scrapers to run at set times or intervals, keeping data fresh for price monitoring, news aggregation, and off-peak runs.
+- [Team](https://docs.mrscraper.com/docs/features/team): Learn how to create a team in MrScraper to share scrapers, results, subscription access, and token usage across your organization.
+- [Web Unblocker](https://docs.mrscraper.com/docs/features/unblocker): Bypass anti-scraping measures and reach geo-restricted content with Web Unblocker, combining browser rendering, proxy routing, and smart retries.
+- [General Agent](https://docs.mrscraper.com/docs/features/ai-scraper/general): Use the AI Scraper General Agent to pull structured data from a single page, such as a product, profile, article, or property detail page, with a prompt.
+- [AI Scraper](https://docs.mrscraper.com/docs/features/ai-scraper): Learn how to use MrScraper's AI Scraper to extract structured data from any web page with just a URL and a prompt, returned as JSON or CSV.
+- [Listing Agent](https://docs.mrscraper.com/docs/features/ai-scraper/listing): AI-powered scraper that extracts data from listing pages with automated browser navigation for pagination, infinite scroll, and load-more buttons.
+- [Map Agent](https://docs.mrscraper.com/docs/features/ai-scraper/map): Use the Map Agent to enter one website URL and instantly retrieve every URL on that domain, mapping site structure before a large-scale scrape.
+- [Workflow](https://docs.mrscraper.com/docs/features/workflow-scraper): Step-by-step guide to building custom scraping workflows with the MrScraper workflow builder, from step types to running your first scrape.
+- [Self-Healing](https://docs.mrscraper.com/docs/features/workflow-scraper/self-healing): Let AI automatically generate, repair, and extend workflows from the dashboard or through the Self-Heal API.
+- [Super Mode](https://docs.mrscraper.com/docs/features/workflow-scraper/super): Learn how to run a Workflow in Super mode, routing requests through a real device to bypass strong anti-bot protection on tough sites.
+- [Templates](https://docs.mrscraper.com/docs/features/workflow-scraper/templates): Use JavaScript IIFE templates in the Inject JavaScript step to parse page content, call page APIs, and capture API responses while scrolling.
+- [Multi-Agent Flow](https://docs.mrscraper.com/docs/features/ai-scraper/multi-agent-flow): Chain the Map, Listing, and General Agents into one workflow to build scalable systems that go from URL discovery to detailed data extraction.
+- [Two Agents Flow](https://docs.mrscraper.com/docs/features/ai-scraper/multi-agent-flow/list): Learn how to crawl targeted listing pages using the Listing Agent, and collect all product detail pages using the General Agent.
+- [Three Agents Flow](https://docs.mrscraper.com/docs/features/ai-scraper/multi-agent-flow/single): Learn how to use MrScraper's Multi-Agent Flow starting from a single seed URL to extract comprehensive data using Map, Listing, and General Agents.
+- [Real-World Use Cases](https://docs.mrscraper.com/docs/features/ai-scraper/multi-agent-flow/use-cases): Explore practical Multi-Agent Flow applications, from scraping a complete e-commerce catalog to gathering comprehensive data across entire websites.
+
+## getting-started
+- [Token Plan](https://docs.mrscraper.com/docs/getting-started/api-token): Learn how plan tokens and API tokens work in MrScraper, why token usage varies between runs, and how to create your own API token for authentication.
+- [Billing](https://docs.mrscraper.com/docs/getting-started/billing): Compare MrScraper subscription plans, understand how token usage and billing cycles work, and choose the right plan for your scraping workload.
+- [CLI](https://docs.mrscraper.com/docs/getting-started/cli): Install, authenticate, and use the MrScraper CLI for HTML fetching, AI extraction, Google SERP, saved scraper reruns, results, and account usage.
+- [MCP Server](https://docs.mrscraper.com/docs/getting-started/mcp-server): Official MrScraper MCP server for web scraping, structured data extraction, and Google search. Connect AI clients or run the open-source server locally.
+- [Overview](https://docs.mrscraper.com/docs/getting-started/overview): Your all-in-one guide to understanding, configuring, and using the MrScraper platform, from your first scrape to AI agents, integrations, and APIs.
+- [Quickstart](https://docs.mrscraper.com/docs/getting-started/quickstart): A step-by-step guide to making your first MrScraper API request, scraping a product page with the General AI Agent in just a few minutes.
+- [Get Screenshot](https://docs.mrscraper.com/docs/getting-started/scraper-api/get-screenshot): Capture full-page or viewport screenshots of dynamic, JavaScript-rendered pages in the Scraper API, with real browser rendering enabled by default.
+- [Scraper API](https://docs.mrscraper.com/docs/getting-started/scraper-api): Build, test, and validate scraping requests in MrScraper's Scraper API, preview results, and generate production-ready API code without coding.
+- [Listing Page](https://docs.mrscraper.com/docs/getting-started/scraper-api/listing-page): Extract paginated item lists, catalog grids, and search results in one run with the listing agent, which handles numbered pages, scrolling, and Load More.
+- [Scrape HTML](https://docs.mrscraper.com/docs/getting-started/scraper-api/scrape-html): Fetch complete, unparsed DOM markup in the Scraper API with automatic proxy rotation, geo-targeting, and anti-bot bypass, ready for your own parser.
+- [Scrape JSON](https://docs.mrscraper.com/docs/getting-started/scraper-api/scrape-json): Extract structured, strongly-typed JSON from single pages with the general agent, using natural language prompts or a JSON schema instead of selectors.
+- [Scrape Markdown](https://docs.mrscraper.com/docs/getting-started/scraper-api/scrape-markdown): Convert web pages into clean, LLM-friendly Markdown in the Scraper API, stripping navigation, scripts, and ads for token-efficient AI and RAG input.
+- [Scrape Sitemap](https://docs.mrscraper.com/docs/getting-started/scraper-api/scrape-sitemap): Crawl target sites with the map agent to discover endpoints, map URL architecture, and generate seed URL lists before running bulk extraction jobs.
+
+## guides
+- [Bulk Scraping With Custom Scraper](https://docs.mrscraper.com/docs/guides/custom-scraper-bulk): Run one custom scraper workflow against many URLs in a single bulk submission, then poll the returned submission ID for progress and results.
+- [E-commerce](https://docs.mrscraper.com/docs/guides/ecommerce): Learn how to scrape product names, prices, ratings, and availability from e-commerce websites with MrScraper, using a TikTok Shop walkthrough.
+- [Job Listing](https://docs.mrscraper.com/docs/guides/job-listing): Learn how to use MrScraper's AI Scraper to extract job postings from real job boards for hiring analysis, market research, or app development.
+- [Optimizing Cost](https://docs.mrscraper.com/docs/guides/optimizing-cost): Learn practical strategies to minimize MrScraper costs through scraper mode selection, smart configuration, scheduling, and output management.
+- [Create and Run a Scraper Programmatically](https://docs.mrscraper.com/docs/guides/programmatically): Learn how to create an AI scraper once in the dashboard and then run it programmatically through the API. Set up once, automate everywhere.
+- [Real Estate](https://docs.mrscraper.com/docs/guides/real-estate): Learn how to use MrScraper to extract property listings from real estate websites for market analysis, investment research, or property aggregation.
+- [Sentiment Analysis](https://docs.mrscraper.com/docs/guides/sentiment-analysis): A step-by-step guide to scraping product reviews with MrScraper and running sentiment analysis to understand what customers really think.
+- [Flight Price](https://docs.mrscraper.com/docs/guides/travel-hospitality): Learn how to use MrScraper to extract flight prices, airlines, and schedules from booking sites for price monitoring and booking analysis.
+
+## integrations
+- [ClawHub](https://docs.mrscraper.com/docs/integrations/clawhub): Install the MrScraper skill on ClawHub to give your OpenClaw agent AI-powered, unblockable web scraping through natural language.
+- [Email](https://docs.mrscraper.com/docs/integrations/email): Learn how to connect your scraper to email so you receive a notification whenever a MrScraper scrape starts, completes, or fails.
+- [LangChain SDK](https://docs.mrscraper.com/docs/integrations/langchain): Use MrScraper as LangChain tools via the langchain-mrscraper package—fetch HTML, run AI and manual scrapers, and list results from agents.
+- [Node.js SDK](https://docs.mrscraper.com/docs/integrations/node): Install the official @mrscraper/sdk package to fetch HTML, run AI scrapers, rerun saved scrapers, and retrieve results from your Node.js applications.
+- [Python SDK](https://docs.mrscraper.com/docs/integrations/python): Install and use mrscraper-sdk, the typed async Python client for the MrScraper API, to fetch HTML, run scrapers, and retrieve results with asyncio.
+- [SQL/Database](https://docs.mrscraper.com/docs/integrations/sql): Learn how to connect your MrScraper scrapers to an external SQL database so scraped data lands in structured tables ready for analysis and reporting.
+- [Webhook](https://docs.mrscraper.com/docs/integrations/webhook): Learn how to use webhooks to send an HTTP request to your own API whenever a MrScraper scrape starts, completes, or fails, and what each payload holds.
+- [Zapier](https://docs.mrscraper.com/docs/integrations/zapier): Learn how to connect MrScraper to Zapier so you can trigger scraping jobs, automate data collection, and build workflows with triggers and actions.
+- [Apify](https://docs.mrscraper.com/docs/integrations/apify): Run MrScraper as Apify Actors to unblock pages, extract detail and listing data, and pipe results into the Apify platform.
+- [MrScraper Listing](https://docs.mrscraper.com/docs/integrations/apify/listing): Apify Actor that extracts structured data from listing and category pages with AI, including pagination across multiple pages.
+- [MrScraper PDP](https://docs.mrscraper.com/docs/integrations/apify/pdp): Apify Actor that unblocks and extracts structured data from detail pages — products, articles, hotels, job postings, and more.
+- [MrScraper Unblocker](https://docs.mrscraper.com/docs/integrations/apify/unblocker): Use the MrScraper Unblocker Apify Actor to retrieve raw HTML from any page, bypassing anti-bot protection and geo restrictions with residential proxies.
+- [Get Your Account Information](https://docs.mrscraper.com/docs/integrations/n8n/account): Learn how to retrieve your MrScraper account information inside n8n with the MrScraper node, and store the returned data in Google Sheets.
+- [Create a Scraper](https://docs.mrscraper.com/docs/integrations/n8n/create-scraper): Build an n8n workflow that creates a new MrScraper scraper and automatically saves its scraper ID and URL to a new Google Sheets spreadsheet.
+- [n8n](https://docs.mrscraper.com/docs/integrations/n8n): Learn how to connect MrScraper to n8n, the open-source workflow automation tool, and run scrapers from schedules, webhooks, or events from other apps.
+- [Listing & General Agents](https://docs.mrscraper.com/docs/integrations/n8n/listing-general): Build an n8n workflow that pairs the Listing and General Agents to collect property URLs from search results and scrape details from each one.
+- [Map & General Agents](https://docs.mrscraper.com/docs/integrations/n8n/map-general): Build an n8n workflow that pairs the MrScraper Map and General Agents to crawl an entire website and extract detailed data from every page.
+- [Map & Listing & General Agents](https://docs.mrscraper.com/docs/integrations/n8n/map-listing-general): Build an n8n workflow that chains the Map, Listing, and General Agents to discover pages, collect item URLs, and scrape details from every one.
+
+## changelog
+- [v3.4.14](https://docs.mrscraper.com/docs/changelog/2026/v3.4.14): Release notes for version 3.4.14 featuring Agent Setup, Playground Analytics, Scraper Type Filter, and Token Usage Analytics.
+
+## residential-proxy
+- [CloakBrowser](https://docs.mrscraper.com/docs/residential-proxy/examples/cloakbrowser): Practical CloakBrowser code examples for routing stealth browser traffic through Residential Proxies, separated into JavaScript (Node.js) and Python sections.
+- [cURL](https://docs.mrscraper.com/docs/residential-proxy/examples/curl): cURL command-line examples for testing Residential Proxy configurations quickly, covering static sessions, rotation, custom headers, and POST requests.
+- [Go](https://docs.mrscraper.com/docs/residential-proxy/examples/go): Go code examples for using Residential Proxy with net/http, covering basic requests, proxy rotation, concurrent scraping, retries, and timeouts.
+- [Node.js](https://docs.mrscraper.com/docs/residential-proxy/examples/nodejs): Node.js code examples for using Residential Proxy with axios, Puppeteer, and native http, covering rotation, parallel sessions, and retries.
+- [Overview](https://docs.mrscraper.com/docs/residential-proxy/examples/overview): Ready-to-use Residential Proxy code examples across languages and frameworks, with a quick reference, best practices, and common use cases.
+- [PHP](https://docs.mrscraper.com/docs/residential-proxy/examples/php): PHP code examples for using Residential Proxy with cURL and Guzzle, covering proxy rotation, multiple sessions, retries, and async requests.
+- [Playwright](https://docs.mrscraper.com/docs/residential-proxy/examples/playwright): Playwright code examples in JavaScript and Python for using Residential Proxy with browser automation, sticky sessions, and parallel contexts.
+- [Puppeteer](https://docs.mrscraper.com/docs/residential-proxy/examples/puppeteer): Puppeteer code examples for using Residential Proxy with Headless Chrome, sticky sessions, page authentication, and geotargeting.
+- [Python](https://docs.mrscraper.com/docs/residential-proxy/examples/python): Python code examples for using Residential Proxy with requests, BeautifulSoup, and asyncio, covering rotation, parallel sessions, and retries.
+- [Ruby](https://docs.mrscraper.com/docs/residential-proxy/examples/ruby): Ruby code examples for using Residential Proxy with Net::HTTP and HTTParty, covering rotation, multiple sessions, retries, and concurrent scraping.
+- [Selenium](https://docs.mrscraper.com/docs/residential-proxy/examples/selenium): Selenium Python code examples for routing browser traffic through Residential Proxy using selenium-wire and Chrome options.
+- [Overview](https://docs.mrscraper.com/docs/residential-proxy/getting-started/overview): Your complete guide to MrScraper Residential Proxy: static and rotating configurations, global coverage, endpoints, and common web scraping use cases.
+- [Proxy Generator](https://docs.mrscraper.com/docs/residential-proxy/getting-started/proxy-generator): Learn how to generate Residential Proxy credentials in the MrScraper dashboard for use in your own scripts, third-party tools, and external apps.
+- [Proxy Scraper](https://docs.mrscraper.com/docs/residential-proxy/getting-started/proxy-scraper): A standalone scraping service that routes requests through residential proxies, separate from individual scraper configurations.
+- [Troubleshoot URL Access](https://docs.mrscraper.com/docs/residential-proxy/getting-started/troubleshoot-url-access): Diagnose and fix proxy access issues when a target website blocks or fails to respond to requests through MrScraper's Residential Proxy.
+- [Verify a Block Manually](https://docs.mrscraper.com/docs/residential-proxy/getting-started/verify-block-manually): Replay a real browsing session through your Residential Proxy to tell whether a block comes from the target website or from the proxy itself.
+- [Authentication](https://docs.mrscraper.com/docs/residential-proxy/configuration/authentication): Learn how Residential Proxy authentication works, how your username pattern sets the proxy configuration, and how to test and troubleshoot it.
+- [Country Codes](https://docs.mrscraper.com/docs/residential-proxy/configuration/country-codes): Learn how Residential Proxy uses ISO 3166-1 alpha-2 country codes to target specific countries, with popular codes, examples, and best practices.
+- [IP Authorization](https://docs.mrscraper.com/docs/residential-proxy/configuration/ip-authorization): Authorize trusted IP addresses to use MrScraper Residential Proxy without sending a username and password, and manage your whitelist securely.
+- [Proxy Status Codes](https://docs.mrscraper.com/docs/residential-proxy/configuration/proxy-status): Understand proxy error responses and what each status code means.
+- [Proxy Types](https://docs.mrscraper.com/docs/residential-proxy/configuration/proxy-types): Compare Static and Rotating Residential Proxy types, understand HTTP and SOCKS5 protocol support, and learn which one to use for your workload.

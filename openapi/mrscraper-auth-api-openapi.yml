@@ -1,0 +1,140 @@
+openapi: 3.2.0
+info:
+  title: Mrscraper Auth API
+  version: '1.0'
+  contact: {}
+  x-refined-note:
+  - x-original-format differs across the merged source definitions and was not carried
+  - x-original-url differs across the merged source definitions and was not carried
+  description: 'Operations tagged auth across 2 of this provider''s published API definitions: api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.mrscraper.com
+tags:
+- name: Auth
+paths:
+  /subscription-accounts:
+    get:
+      security:
+      - ApiKeyAuth: []
+      - BearerAuth: []
+      tags:
+      - Auth
+      parameters:
+      - description: Backoffice token to include database connection string
+        name: x-backoffice-token
+        in: header
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account information; user.databaseConnectionString is empty without a valid backoffice token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/auth.SubscriptionAccount'
+                  message:
+                    type: string
+      summary: Get subscription accounts
+      x-summary-source: derived
+      operationId: getSubscriptionAccounts
+      x-operation-id-source: derived
+    servers:
+    - url: https://api.mrscraper.com
+components:
+  schemas:
+    auth.SubscriptionAccount:
+      type: object
+      properties:
+        apiTokenName:
+          type: string
+        endsAt:
+          type: string
+        id:
+          type: string
+        isEnterprise:
+          type: boolean
+        maxConcurrency:
+          type: integer
+        quantity:
+          type: integer
+        rateLimit:
+          type: integer
+        rateTtl:
+          type: integer
+        stripeStatus:
+          type: string
+        stripeSubscriptionId:
+          type: string
+        subscriptionItemId:
+          type: string
+        tokenLimit:
+          type: integer
+        tokenUsage:
+          type: integer
+        trialEndsAt:
+          type: string
+        user:
+          $ref: '#/components/schemas/auth.User'
+        userId:
+          type: string
+    auth.User:
+      type: object
+      properties:
+        address:
+          type: string
+        avatar:
+          type: string
+        birthDate:
+          type: string
+        createdAt:
+          type: string
+        createdById:
+          type: string
+        databaseConnectionString:
+          type: string
+        deletedAt:
+          type: string
+        deletedById:
+          type: string
+        domainTargets:
+          type: array
+          items:
+            type: string
+        email:
+          type: string
+        gender:
+          type: string
+        id:
+          type: string
+        isVerified:
+          type: boolean
+        name:
+          type: string
+        onboardingCompletedAt:
+          type: string
+        otp: {}
+        phoneNumber:
+          type: string
+        rabbitMqQueueName:
+          type: string
+        updatedAt:
+          type: string
+        updatedById:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      description: atk_example_not_a_real_token
+      type: apiKey
+      name: x-api-token
+      in: header
+    BearerAuth:
+      description: '"Bearer <token>" — a MrScraper API token, or an OAuth 2.1 access token issued by the platform for the MCP connector (scopes: scrape:read for GET /, scrape:write for POST /, account:read for GET /subscription-accounts).'
+      type: apiKey
+      name: Authorization
+      in: header
+x-refined-from:
+- api.mrscraper.com-docs-doc.json
+- mrscraper-scraper-service-gateway-openapi.yml

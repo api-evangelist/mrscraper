@@ -1,0 +1,44 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/getting-started/billing
+sources:
+- https://docs.mrscraper.com/docs/getting-started/billing
+- https://docs.mrscraper.com/docs/api/error-handling
+- https://docs.mrscraper.com/docs/api/response-headers
+name: MrScraper rate limits
+description: Published limits are per-plan concurrency caps; requests over the limit receive 429 with an optional Retry-After. No per-second or per-minute request rate is published.
+limit_count: 3
+limits:
+- name: Concurrent Requests - Scraper Free
+  limit_text: Concurrent Requests
+  max: 10
+  scope: per-account
+  plan: Scraper Free
+  kind: concurrency
+- name: Concurrent Requests - Scraper Pro
+  limit_text: Concurrent Requests
+  max: 100
+  scope: per-account
+  plan: Scraper Pro
+  kind: concurrency
+- name: Concurrent Requests - Scraper Enterprise
+  limit_text: Concurrent Requests
+  scope: per-account
+  plan: Scraper Enterprise
+  kind: concurrency
+  note: Custom
+exhaustion:
+  status: 429
+  body: '{"message": "Too many requests. Please try again later."}'
+  headers: [Retry-After]
+  guidance: Back off and retry after a short delay; honor the Retry-After header if present.
+usage_headers:
+- name: token_usage
+  description: Tokens consumed by the scraping request (Manual Scraper API and Web Renderer API only).
+- name: bandwidth_usage
+  description: Data bandwidth consumed by the request, in MB.
+- name: runtime
+  description: Execution runtime in seconds.
+- name: x-status-code
+  description: HTTP status returned by the target website.
+note: The 403 Forbidden response also covers "Token limit exceeded" (plan quota), distinct from the 429 concurrency/rate response.

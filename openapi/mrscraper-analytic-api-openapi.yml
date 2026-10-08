@@ -1,0 +1,73 @@
+openapi: 3.2.0
+info:
+  title: MrScraper Analytic API
+  version: '2026-10-07'
+  description: 'GENERATED FROM DOCUMENTATION by API Evangelist on 2026-10-07: 3 operation(s) read from 3 public documentation page(s) (each operation names its page in x-source).'
+  x-evidence-tiers:
+    code-example: 25
+    documentation: 3
+    pages-with-code: 40
+    pages-read: 40
+  x-generated-from: documentation
+  x-provenance: generated
+  x-authored-by: API Evangelist
+  x-generated: '2026-10-07'
+  x-generator: generate-contract-from-docs.py
+  x-engine: anthropic
+  x-sources:
+  - https://docs.mrscraper.com/docs/api/authentication
+  - https://docs.mrscraper.com/docs/api/v3/analytic/proxy
+  - https://docs.mrscraper.com/docs/getting-started/mcp-server
+  x-filtered:
+    date: '2026-10-07'
+    kept: 3
+    dropped: 25
+    rule: method+path verbatim in the docs APIPage declarations for document openapi.json
+servers:
+- url: https://api.app.mrscraper.com
+security:
+- apiKey: []
+tags:
+- name: Analytic
+paths:
+  /api/v1/analytic/statuses:
+    get:
+      operationId: get_api_v1_analytic_statuses
+      tags:
+      - Analytic
+      summary: GET /api/v1/analytic/statuses
+      x-source: https://docs.mrscraper.com/docs/api/authentication
+      parameters:
+      - name: apiTokenName
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: domain
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success (status as documented)
+      x-evidence:
+        kind: code-example
+        language: curl
+        snippet: "curl -X GET \"https://api.app.mrscraper.com/api/v1/analytic/statuses?domain=example.com&startDate=2026-04-12%2000:00:00&endDate=2026-04-13%2023:59:59&apiTokenName=YOUR_TOKEN_NAME\"  -H \"accept: application/json\"  -H \"x-api-token: <MRSCRAPER_API_TOKEN>\" \n Note The apiTokenName query parameter filters metrics by the token's name (e.g., production-worker ). API Overview Comprehensive documentation for "
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-token

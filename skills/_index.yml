@@ -1,0 +1,21 @@
+generated: '2026-10-07'
+method: searched
+source: https://github.com/mrscraper-com/cli/tree/main/skills
+note: Provider-published Agent Skills saved VERBATIM from the MrScraper CLI repository (MIT). The same four skills ship in mrscraper-com/mrscraper-claude-plugin, mrscraper-chatgpt-plugin, mrscraper-grok-plugin, mrscraper-opencode-plugin and mrscraper-antigravity-plugin, and are installed by `npx -y @mrscraper/cli@latest init --all`. They drive the CLI (`mrscraper fetch|scrape|serp|rerun|results|result|status`), which calls the REST operations recorded in mcp/mrscraper-tool-crosswalk.yml.
+skills:
+- name: mrscraper
+  file: skills/mrscraper.md
+  source: https://raw.githubusercontent.com/mrscraper-com/cli/main/skills/mrscraper/SKILL.md
+  operations: [fetchPage, runScraper, getSubscriptionAccounts]
+- name: mrscraper-fetch
+  file: skills/mrscraper-fetch.md
+  source: https://raw.githubusercontent.com/mrscraper-com/cli/main/skills/mrscraper-fetch/SKILL.md
+  operations: [fetchPage]
+- name: mrscraper-scrape
+  file: skills/mrscraper-scrape.md
+  source: https://raw.githubusercontent.com/mrscraper-com/cli/main/skills/mrscraper-scrape/SKILL.md
+  operations: [runScraper]
+- name: mrscraper-serp
+  file: skills/mrscraper-serp.md
+  source: https://raw.githubusercontent.com/mrscraper-com/cli/main/skills/mrscraper-serp/SKILL.md
+  operations: []

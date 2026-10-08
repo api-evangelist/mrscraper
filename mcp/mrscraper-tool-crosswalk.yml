@@ -1,0 +1,83 @@
+generated: '2026-10-07'
+method: derived
+source: https://docs.mrscraper.com/docs/getting-started/mcp-server
+sources:
+- https://docs.mrscraper.com/docs/getting-started/mcp-server
+- https://raw.githubusercontent.com/mrscraper-com/mrscraper-mcp/main/src/scopes.ts
+- openapi/mrscraper-scraper-service-gateway-openapi.yml
+- openapi/_ae-authored/mrscraper-openapi-generated.yml
+note: Tool list and the REST call each tool makes are the provider's own documentation (Tool reference section) and server source; the hosted endpoint is OAuth-gated (401 on tools/list), so tool input schemas were not introspected live. Each tool inherits the parameters of the operation it binds to.
+surfaces:
+  openapi:
+  - path: openapi/_original/mrscraper-scraper-service-gateway-openapi.yml
+    host: https://api.mrscraper.com
+    provenance: provider-published (Swagger 2.0 at https://api.mrscraper.com/docs/doc.json)
+  - path: openapi/_ae-authored/mrscraper-openapi-generated.yml
+    host: https://api.app.mrscraper.com
+    provenance: generated from documentation (3 of 13 documented operations)
+  graphql: null
+  mcp:
+    url: https://mcp.mrscraper.com/mcp
+    gated: true
+    auth: OAuth 2.1 (API-key Bearer fallback)
+crosswalk:
+- tool: fetch
+  category: read
+  rest: [fetchPage]
+  binding: >-
+    GET https://api.mrscraper.com/ (Web Renderer) - the docs state "Each invocation corresponds to one request: GET https://api.mrscraper.com/"
+  confidence: high
+  scope: scrape:read
+- tool: result
+  category: read
+  rest: [get_api_v1_results_resultId]
+  binding: >-
+    GET https://api.app.mrscraper.com/api/v1/results/{result_id}
+  confidence: high
+  scope: scrape:read
+- tool: status
+  category: read
+  rest: [getSubscriptionAccounts, get_api_v1_analytic_statuses]
+  binding: >-
+    GET https://api.app.mrscraper.com/api/v1/subscription-accounts on every call, plus GET /api/v1/analytic/statuses when `domain` is supplied. getSubscriptionAccounts is the gateway contract's /subscription-accounts on api.mrscraper.com (same resource, different host) - the Platform API's own /api/v1/subscription-accounts has no contract operation.
+  confidence: medium
+  scope: account:read
+mcp_only:
+- tool: scrape
+  reason: >-
+    Calls POST https://api.app.mrscraper.com/api/v1/scrapers-ai (documented at docs/api/v3/scraper/ai/ai-init), which has no contract operation - the docs render it from an openapi.json the site does not serve as a file and the generator could not read it verbatim.
+  scope: scrape:write
+- tool: rerun
+  reason: >-
+    Calls POST /api/v1/scrapers-ai-rerun, /api/v1/scrapers-ai-rerun/bulk, /api/v1/scrapers-manual-rerun or /api/v1/scrapers-manual-rerun/bulk depending on `type` and target count; documented, no contract operation.
+  scope: scrape:write
+- tool: results
+  reason: >-
+    Calls GET https://api.app.mrscraper.com/api/v1/results (page/pageSize/sortField/sortOrder/search/date-range filters); documented at docs/api/v3/result/all, no contract operation.
+  scope: scrape:read
+- tool: serp
+  reason: >-
+    Calls POST https://sync.scraper.mrscraper.com/api/google/serp/v2/sync, a host with no published contract.
+  scope: scrape:read
+rest_only:
+- runScraper
+- listJobs
+- createJob
+- getJob
+- updateJob
+- getStoredResult
+- listTasks
+- createTask
+- updateTasksBulk
+- createTasksBulk
+- getTask
+- updateTask
+- updateTaskStatus
+- get_api_v1_proxies_user_requests_bandwidth
+coverage:
+  tools: 7
+  tools_bound: 3
+  tools_mcp_only: 4
+  rest_operations: 18
+  rest_bound: 4
+  rest_only: 14

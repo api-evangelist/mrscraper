@@ -1,0 +1,57 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/api/overview
+sources:
+- https://docs.mrscraper.com/docs/api/authentication
+- https://docs.mrscraper.com/docs/api/pagination
+- https://docs.mrscraper.com/docs/api/response-headers
+- https://docs.mrscraper.com/docs/api/error-handling
+- https://docs.mrscraper.com/docs/api/v3/scraper/bulk/cancel-bulk-by-result-id
+- openapi/mrscraper-scraper-service-gateway-openapi.yml
+authentication:
+  style: api-key header
+  header: x-api-token
+  alternatives: 'Authorization: Bearer <API token> on Marketplace endpoints; `token` query parameter on the Scraper API; OAuth 2.1 bearer on the hosted MCP endpoint'
+  see: authentication/mrscraper-authentication.yml
+idempotency:
+  coverage: none
+  header: null
+  note: No Idempotency-Key header or replay protection is documented for any write (POST /api/v1/scrapers-ai, reruns, bulk reruns, Scraper API POST /). The Scraper API `async` flag returns a task ID immediately but does not de-duplicate repeated submissions.
+reversibility:
+  grade: documented
+  write_surface:
+  - operation: Bulk rerun (POST /api/v1/scrapers-ai-rerun/bulk, POST /api/v1/scrapers-manual-rerun/bulk)
+    reversal: PATCH /api/v1/scrapers-bulks/result/{resultId}/cancel (Cancel One Bulk Result by Result ID) and PATCH /api/v1/scrapers-bulks/{scraperId}/cancel (Cancel All Bulk Results by Scraper ID)
+    window: not stated - the docs describe cancelling queued/running bulk results but publish no time window
+    docs: https://docs.mrscraper.com/docs/api/v3/scraper/bulk/cancel-bulk-by-scraper-id
+  - operation: Single scraper runs (POST /api/v1/scrapers-ai, /scrapers-ai-rerun, /scrapers-manual-rerun, Scraper API POST /)
+    reversal: none documented
+    window: null
+  dry_run_mode: none documented
+  note: Token consumption from a completed run is not documented as refundable.
+pagination:
+  style: page-number
+  params: [page, pageSize, sortField, sortOrder]
+  optional_params: [search, dateRangeColumn, startAt, endAt]
+  response_fields: [meta.page, meta.pageSize, meta.total, meta.totalPage]
+  max_page_size: 100 (recommended maximum to avoid timeouts)
+  note: The pagination page calls the scheme cursor-based, but every documented parameter is page/pageSize with a total count. The gateway /jobs and /tasks list endpoints take the same parameters.
+field_expansion: none documented
+metadata: none documented
+request_tracing:
+  response_headers: [x-result-id]
+  usage_headers: [token_usage, bandwidth_usage, runtime, x-status-code]
+  note: Usage headers are returned only by the Manual Scraper API and Web Renderer API; x-status-code is the TARGET site's HTTP status, x-result-id identifies the stored result.
+versioning:
+  scheme: path (/api/v1 on api.app.mrscraper.com); Scraper API gateway unversioned
+  see: lifecycle/mrscraper-lifecycle.yml
+error_envelope:
+  shape: '{"message": string, "error": string}'
+  content_type: application/json
+  see: errors/mrscraper-problem-types.yml
+rate_limit_signaling:
+  status: 429
+  headers: [Retry-After]
+  note: Retry-After is described as "if present"; no X-RateLimit-* or RateLimit headers are documented.
+  see: rate-limits/mrscraper-rate-limits.yml
+content_type: application/json for every request with a payload and every response (binary screenshots return base64 inside JSON)

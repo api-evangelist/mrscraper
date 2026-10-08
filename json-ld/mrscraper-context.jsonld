@@ -1,0 +1,289 @@
+{
+  "@context": {
+    "@vocab": "https://mrscraper.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "mrscraper": "https://mrscraper.com/schema#",
+    "api.TPaginationMeta": "mrscraper:api.TPaginationMeta",
+    "page": {
+      "@id": "mrscraper:page",
+      "@type": "xsd:integer"
+    },
+    "pageSize": {
+      "@id": "mrscraper:pageSize",
+      "@type": "xsd:integer"
+    },
+    "total": {
+      "@id": "mrscraper:total",
+      "@type": "xsd:integer"
+    },
+    "totalPage": {
+      "@id": "mrscraper:totalPage",
+      "@type": "xsd:integer"
+    },
+    "auth.SubscriptionAccount": "mrscraper:auth.SubscriptionAccount",
+    "apiTokenName": {
+      "@id": "mrscraper:apiTokenName",
+      "@type": "xsd:string"
+    },
+    "endsAt": {
+      "@id": "mrscraper:endsAt",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "mrscraper:id",
+      "@type": "xsd:string"
+    },
+    "isEnterprise": {
+      "@id": "mrscraper:isEnterprise",
+      "@type": "xsd:boolean"
+    },
+    "maxConcurrency": {
+      "@id": "mrscraper:maxConcurrency",
+      "@type": "xsd:integer"
+    },
+    "quantity": {
+      "@id": "mrscraper:quantity",
+      "@type": "xsd:integer"
+    },
+    "rateLimit": {
+      "@id": "mrscraper:rateLimit",
+      "@type": "xsd:integer"
+    },
+    "rateTtl": {
+      "@id": "mrscraper:rateTtl",
+      "@type": "xsd:integer"
+    },
+    "stripeStatus": {
+      "@id": "mrscraper:stripeStatus",
+      "@type": "xsd:string"
+    },
+    "stripeSubscriptionId": {
+      "@id": "mrscraper:stripeSubscriptionId",
+      "@type": "xsd:string"
+    },
+    "subscriptionItemId": {
+      "@id": "mrscraper:subscriptionItemId",
+      "@type": "xsd:string"
+    },
+    "tokenLimit": {
+      "@id": "mrscraper:tokenLimit",
+      "@type": "xsd:integer"
+    },
+    "tokenUsage": {
+      "@id": "mrscraper:tokenUsage",
+      "@type": "xsd:integer"
+    },
+    "trialEndsAt": {
+      "@id": "mrscraper:trialEndsAt",
+      "@type": "xsd:string"
+    },
+    "user": {
+      "@id": "mrscraper:user",
+      "@type": "@id"
+    },
+    "userId": {
+      "@id": "mrscraper:userId",
+      "@type": "xsd:string"
+    },
+    "auth.User": "mrscraper:auth.User",
+    "address": {
+      "@id": "mrscraper:address",
+      "@type": "xsd:string"
+    },
+    "avatar": {
+      "@id": "mrscraper:avatar",
+      "@type": "xsd:string"
+    },
+    "birthDate": {
+      "@id": "mrscraper:birthDate",
+      "@type": "xsd:string"
+    },
+    "createdAt": {
+      "@id": "mrscraper:createdAt",
+      "@type": "xsd:string"
+    },
+    "createdById": {
+      "@id": "mrscraper:createdById",
+      "@type": "xsd:string"
+    },
+    "databaseConnectionString": {
+      "@id": "mrscraper:databaseConnectionString",
+      "@type": "xsd:string"
+    },
+    "deletedAt": {
+      "@id": "mrscraper:deletedAt",
+      "@type": "xsd:string"
+    },
+    "deletedById": {
+      "@id": "mrscraper:deletedById",
+      "@type": "xsd:string"
+    },
+    "domainTargets": {
+      "@id": "mrscraper:domainTargets",
+      "@container": "@list"
+    },
+    "email": {
+      "@id": "mrscraper:email",
+      "@type": "xsd:string"
+    },
+    "gender": {
+      "@id": "mrscraper:gender",
+      "@type": "xsd:string"
+    },
+    "isVerified": {
+      "@id": "mrscraper:isVerified",
+      "@type": "xsd:boolean"
+    },
+    "name": {
+      "@id": "mrscraper:name",
+      "@type": "xsd:string"
+    },
+    "onboardingCompletedAt": {
+      "@id": "mrscraper:onboardingCompletedAt",
+      "@type": "xsd:string"
+    },
+    "otp": {
+      "@id": "mrscraper:otp"
+    },
+    "phoneNumber": {
+      "@id": "mrscraper:phoneNumber",
+      "@type": "xsd:string"
+    },
+    "rabbitMqQueueName": {
+      "@id": "mrscraper:rabbitMqQueueName",
+      "@type": "xsd:string"
+    },
+    "updatedAt": {
+      "@id": "mrscraper:updatedAt",
+      "@type": "xsd:string"
+    },
+    "updatedById": {
+      "@id": "mrscraper:updatedById",
+      "@type": "xsd:string"
+    },
+    "gateway.AsyncTaskResponse": "mrscraper:gateway.AsyncTaskResponse",
+    "commandId": {
+      "@id": "mrscraper:commandId",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "mrscraper:status",
+      "@type": "xsd:string"
+    },
+    "taskId": {
+      "@id": "mrscraper:taskId",
+      "@type": "xsd:integer"
+    },
+    "gateway.RequestBody": "mrscraper:gateway.RequestBody",
+    "action": {
+      "@id": "mrscraper:action",
+      "@type": "xsd:string"
+    },
+    "agent": {
+      "@id": "mrscraper:agent",
+      "@type": "xsd:string"
+    },
+    "domain": {
+      "@id": "mrscraper:domain",
+      "@type": "xsd:string"
+    },
+    "prompt": {
+      "@id": "mrscraper:prompt",
+      "@type": "xsd:string"
+    },
+    "stream": {
+      "@id": "mrscraper:stream",
+      "@type": "xsd:boolean"
+    },
+    "task_details": {
+      "@id": "mrscraper:task_details"
+    },
+    "token_usage": {
+      "@id": "mrscraper:token_usage",
+      "@type": "xsd:integer"
+    },
+    "url": {
+      "@id": "mrscraper:url",
+      "@type": "xsd:string"
+    },
+    "job.Job": "mrscraper:job.Job",
+    "job.JobStatus": "mrscraper:job.JobStatus",
+    "task.BatchCreateRequest": "mrscraper:task.BatchCreateRequest",
+    "data": {
+      "@id": "mrscraper:data",
+      "@container": "@list"
+    },
+    "task.BatchCreateResponse": "mrscraper:task.BatchCreateResponse",
+    "created": {
+      "@id": "mrscraper:created",
+      "@type": "xsd:integer"
+    },
+    "tasks": {
+      "@id": "mrscraper:tasks",
+      "@container": "@list"
+    },
+    "task.BatchUpdateRequest": "mrscraper:task.BatchUpdateRequest",
+    "task.BatchUpdateTaskSwagger": "mrscraper:task.BatchUpdateTaskSwagger",
+    "browserType": {
+      "@id": "mrscraper:browserType"
+    },
+    "callbackUrl": {
+      "@id": "mrscraper:callbackUrl",
+      "@type": "xsd:string"
+    },
+    "deviceOs": {
+      "@id": "mrscraper:deviceOs"
+    },
+    "fingerprintId": {
+      "@id": "mrscraper:fingerprintId",
+      "@type": "xsd:integer"
+    },
+    "jobId": {
+      "@id": "mrscraper:jobId",
+      "@type": "xsd:integer"
+    },
+    "proxy": {
+      "@id": "mrscraper:proxy",
+      "@type": "xsd:string"
+    },
+    "result": {
+      "@id": "mrscraper:result",
+      "@type": "xsd:string"
+    },
+    "retryCount": {
+      "@id": "mrscraper:retryCount",
+      "@type": "xsd:integer"
+    },
+    "scrapeTime": {
+      "@id": "mrscraper:scrapeTime",
+      "@type": "xsd:decimal"
+    },
+    "solution": {
+      "@id": "mrscraper:solution",
+      "@type": "xsd:string"
+    },
+    "statusMessage": {
+      "@id": "mrscraper:statusMessage",
+      "@type": "xsd:string"
+    },
+    "taskDetails": {
+      "@id": "mrscraper:taskDetails"
+    },
+    "task.BrowserType": "mrscraper:task.BrowserType",
+    "task.DeviceOS": "mrscraper:task.DeviceOS",
+    "task.Task": "mrscraper:task.Task",
+    "task.TaskQueuedResponse": "mrscraper:task.TaskQueuedResponse",
+    "task.TaskStatus": "mrscraper:task.TaskStatus",
+    "task.TaskSwagger": "mrscraper:task.TaskSwagger",
+    "task.UpdateTaskStatusRequest": "mrscraper:task.UpdateTaskStatusRequest"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "MrScraper API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects MrScraper's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-07) from openapi/mrscraper-scraper-service-gateway-openapi.yml.",
+  "dcterms:created": "2026-10-07",
+  "dcterms:source": [
+    "openapi/mrscraper-scraper-service-gateway-openapi.yml"
+  ]
+}

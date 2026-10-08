@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mrscraper/main/json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json",
+  "title": "GetApiV1ResultsResultidResponse",
+  "x-generated": "2026-10-07",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/_ae-authored/mrscraper-openapi-generated.yml#/components/schemas/GetApiV1ResultsResultidResponse",
+  "type": "object",
+  "properties": {
+    "status_code": {
+      "type": "integer",
+      "description": "HTTP status returned by the MrScraper service."
+    },
+    "data": {
+      "type": "object",
+      "description": "Parsed JSON or response text supplied by the service."
+    },
+    "headers": {
+      "type": "object",
+      "description": "Response headers with credential-bearing headers filtered out."
+    }
+  }
+}

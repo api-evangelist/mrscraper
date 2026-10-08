@@ -1,0 +1,18 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/changelog/2026/v3.4.14
+url: https://docs.mrscraper.com/docs/changelog/2026/v3.4.14
+docs: https://docs.mrscraper.com/docs/changelog/2026/v3.4.14
+scheme: semver (product release versions, v3.x.y)
+current_version: v3.4.14
+note: The docs changelog section lists a single release page (llms.txt index, "changelog" section). The page publishes no release date; only the year is carried by its /changelog/2026/ path. The index page /docs/changelog itself answers 404.
+entries:
+- version: v3.4.14
+  date: '2026'
+  breaking: false
+  highlights:
+  - New Agent Setup page (app.mrscraper.com/setup) for connecting MrScraper with supported AI coding agents and harnesses
+  - Token Usage analytics chart with independent visualization and interval controls
+  - Playground Analytics tab per use case (Scrape HTML, Scrape Markdown, Get Screenshot, Scrape JSON, Listing Page, Scrape Sitemap)
+  - Scraper type filter in the Analytics dashboard
+  - New on Marketplace section listing APIs published in the last 14 days

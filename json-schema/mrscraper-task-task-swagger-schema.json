@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mrscraper/main/json-schema/mrscraper-task-task-swagger-schema.json",
+  "title": "task.TaskSwagger",
+  "x-generated": "2026-10-07",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/mrscraper-scraper-service-gateway-openapi.yml#/components/schemas/task.TaskSwagger",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string"
+    },
+    "browserType": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/task.BrowserType"
+        }
+      ]
+    },
+    "callbackUrl": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "deviceOs": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/task.DeviceOS"
+        }
+      ]
+    },
+    "domain": {
+      "type": "string"
+    },
+    "fingerprintId": {
+      "type": "integer"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "jobId": {
+      "type": "integer"
+    },
+    "proxy": {
+      "type": "string"
+    },
+    "result": {
+      "type": "string"
+    },
+    "retryCount": {
+      "type": "integer"
+    },
+    "scrapeTime": {
+      "type": "number"
+    },
+    "solution": {
+      "type": "string"
+    },
+    "status": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/task.TaskStatus"
+        }
+      ]
+    },
+    "statusMessage": {
+      "type": "string"
+    },
+    "taskDetails": {
+      "type": "object"
+    },
+    "tokenUsage": {
+      "type": "integer"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "task.BrowserType": {
+      "type": "string",
+      "enum": [
+        "CHROME",
+        "FIREFOX",
+        "SAFARI"
+      ],
+      "x-enum-varnames": [
+        "BrowserChrome",
+        "BrowserFirefox",
+        "BrowserSafari"
+      ]
+    },
+    "task.DeviceOS": {
+      "type": "string",
+      "enum": [
+        "WINDOWS",
+        "MACOS",
+        "LINUX"
+      ],
+      "x-enum-varnames": [
+        "DeviceWindows",
+        "DeviceMacOS",
+        "DeviceLinux"
+      ]
+    },
+    "task.TaskStatus": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "PROCESSING",
+        "COMPLETED",
+        "FAILED"
+      ],
+      "x-enum-varnames": [
+        "StatusPending",
+        "StatusProcessing",
+        "StatusCompleted",
+        "StatusFailed"
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+generated: '2026-10-07'
+method: searched
+source: https://api.app.mrscraper.com/.well-known/oauth-authorization-server
+docs: https://docs.mrscraper.com/docs/getting-started/mcp-server
+note: Scopes are issued by the OAuth 2.1 authorization server at https://api.app.mrscraper.com for the MCP resource https://mcp.mrscraper.com/mcp (RFC 9728 protected-resource metadata lists scrape:read, scrape:write, account:read; the AS metadata adds offline_access). Tool-to-scope binding is from the server source (src/scopes.ts). The REST API itself uses API tokens, not scopes.
+authorization_server:
+  issuer: https://api.app.mrscraper.com
+  authorization_endpoint: https://api.app.mrscraper.com/oauth/authorize
+  token_endpoint: https://api.app.mrscraper.com/oauth/token
+  registration_endpoint: https://api.app.mrscraper.com/oauth/register
+  revocation_endpoint: https://api.app.mrscraper.com/oauth/revoke
+  grant_types: [authorization_code, refresh_token]
+  code_challenge_methods: [S256]
+scopes:
+- scope: scrape:read
+  description: Read-only scraping and retrieval - fetch a page through the Web Renderer, run a Google SERP query, list and read stored results.
+  tools: [fetch, serp, results, result]
+- scope: scrape:write
+  description: Create and run scrapers - AI extraction runs and reruns of saved AI or manual scrapers.
+  tools: [scrape, rerun]
+- scope: account:read
+  description: Read subscription status, quota, token usage and per-domain request outcomes.
+  tools: [status]
+- scope: offline_access
+  description: Issue a refresh token (listed in the authorization-server metadata scopes_supported; not bound to a tool).
+  tools: []

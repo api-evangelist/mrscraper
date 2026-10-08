@@ -1,23 +1,495 @@
 aid: mrscraper
 name: MrScraper
-description: 'MrScraper is a company surfaced via the API Evangelist harvest backlog (source: monid-connectors)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'MrScraper is an AI-powered web scraping platform: a Scraper API (Web Renderer fetch, Scrape JSON/Markdown, screenshots,
+  listing pages and sitemaps on api.mrscraper.com), a Platform API for creating, rerunning and managing scrapers and results
+  (api.app.mrscraper.com/api/v1), Google SERP, residential proxies, a hosted OAuth 2.1 MCP server (mcp.mrscraper.com/mcp),
+  a CLI with agent skills, Node, Python, LangChain and n8n SDKs, and webhooks.'
 url: https://raw.githubusercontent.com/api-evangelist/mrscraper/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:monid-connectors
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-07 (local-v5; was harvest)
 specificationVersion: '0.20'
 created: '2026-10-07'
 modified: '2026-10-07'
 tags:
 - Company
-apis: []
+- Web Scraping
+- Data Extraction
+- Proxies
+- AI Agents
+- MCP
+- Search
+- Browser Automation
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+image: https://mrscraper.com/og.png
 common:
+- type: DeveloperPortal
+  url: https://api.app.mrscraper.com</code
+- type: AgenticAccess
+  url: agentic-access/mrscraper-agentic-access.yml
+- type: RateLimits
+  url: rate-limits/mrscraper-rate-limits.yml
+- type: Plans
+  url: plans/mrscraper-plans-pricing.yml
+- type: Spectral
+  url: rules/mrscraper-rules.yml
+- type: JSONLD
+  url: json-ld/mrscraper-context.jsonld
+- type: Vocabulary
+  url: vocabulary/mrscraper-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Webhooks
+  url: asyncapi/mrscraper-webhooks.yml
+- type: DataModel
+  url: data-model/mrscraper-data-model.yml
+- type: CLI
+  url: cli/mrscraper-cli.yml
+- type: ChangeLog
+  url: changelog/mrscraper-changelog.yml
+- type: Conventions
+  url: conventions/mrscraper-conventions.yml
+- type: Compliance
+  url: https://mrscraper.com/trust
+- type: OAuthScopes
+  url: scopes/mrscraper-scopes.yml
+- type: Lifecycle
+  url: lifecycle/mrscraper-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/mrscraper-problem-types.yml
+- type: Conformance
+  url: conformance/mrscraper-conformance.yml
+- type: Overlay
+  url: overlays/mrscraper-scraper-service-gateway-overlay.yaml
+- type: LLMsTxt
+  url: llms/mrscraper-llms.txt
+- type: ToolCrosswalk
+  url: mcp/mrscraper-tool-crosswalk.yml
+- type: MCPServer
+  url: mcp/mrscraper-mcp.yml
+- type: WellKnown
+  url: well-known/mrscraper-well-known.yml
+- type: Hosts
+  url: hosts/mrscraper-hosts.yml
+- type: Vendors
+  url: vendors/mrscraper-vendors.yml
+- type: SDKs
+  url: packages/mrscraper-packages.yml
+- type: Packages
+  url: packages/mrscraper-packages.yml
+- type: StatusPage
+  url: https://status.mrscraper.com
+- type: Authentication
+  url: authentication/mrscraper-authentication.yml
+- type: TrustCenter
+  url: security/mrscraper-trust-center.yml
+- type: DomainSecurity
+  url: security/mrscraper-domain-security.yml
 - type: Website
   url: https://mrscraper.com
+- type: APIReference
+  url: https://docs.mrscraper.com/docs/api/overview
+- type: Blog
+  url: https://mrscraper.com/blog
+- type: ChangeLog
+  url: https://docs.mrscraper.com/docs/changelog/2026/v3.4.14
+- type: Documentation
+  url: https://docs.mrscraper.com
+- type: GettingStarted
+  url: https://docs.mrscraper.com/docs/getting-started/quickstart
+- type: Pricing
+  url: https://mrscraper.com/pricing
+- type: PrivacyPolicy
+  url: https://mrscraper.com/privacy-policy
+- type: Support
+  url: https://mrscraper.com/support
+- type: TermsOfService
+  url: https://mrscraper.com/terms-of-use
+- type: GitHubOrganization
+  url: https://github.com/mrscraper-com
+- type: Login
+  url: https://app.mrscraper.com
+- type: Integrations
+  url: https://mrscraper.com/integrations
+apis:
+- name: MrScraper Google SERP API
+  description: >-
+    Synchronous Google SERP endpoint (POST https://sync.scraper.mrscraper.com/api/google/serp/v2/sync)
+    returning structured search results in JSON or HTML from a query or a complete Google search URL;
+    documented through the CLI `serp` command and the MCP `serp` tool. No published contract.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/mcp-server
+  baseURL: https://sync.scraper.mrscraper.com
+  tags:
+  - Search
+  - SERP
+  properties:
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/cli
+  aid: mrscraper:mrscraper-google-serp-api
+  image: https://mrscraper.com/og.png
+- name: MrScraper MCP Server
+  description: >-
+    Official Model Context Protocol server: hosted Streamable HTTP endpoint at https://mcp.mrscraper.com/mcp
+    behind OAuth 2.1 (PKCE, dynamic client registration, scopes scrape:read / scrape:write / account:read)
+    with an API-key Bearer fallback, and the same server as the @mrscraper/mcp npm package over stdio.
+    Seven documented tools: fetch, scrape, serp, status, rerun, results, result.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/mcp-server
+  baseURL: https://mcp.mrscraper.com/mcp
+  tags:
+  - MCP
+  - AI Agents
+  properties:
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/mcp-server
+  - type: SourceCode
+    url: https://github.com/mrscraper-com/mrscraper-mcp
+  - type: Package
+    url: https://www.npmjs.com/package/@mrscraper/mcp
+  aid: mrscraper:mrscraper-mcp-server
+  image: https://mrscraper.com/og.png
+- aid: mrscraper:mrscraper-analytic-api
+  name: MrScraper Analytic API
+  description: The Analytic API from MrScraper — 1 operation(s) for analytic.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  baseURL: https://api.mrscraper.com
+  tags:
+  - Analytic
+  properties:
+  - type: OpenAPI
+    url: openapi/mrscraper-analytic-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+  - type: SwaggerUI
+    url: https://api.mrscraper.com/docs
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-swagger-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-auth-subscription-account-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-gateway-request-body-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-job-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-update-task-status-request-schema.json
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/api/overview
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init
+  - type: Authentication
+    url: https://docs.mrscraper.com/docs/api/authentication
+  - type: Pagination
+    url: https://docs.mrscraper.com/docs/api/pagination
+  - type: Errors
+    url: https://docs.mrscraper.com/docs/api/error-handling
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json
+- aid: mrscraper:mrscraper-auth-api
+  name: MrScraper Auth API
+  description: The auth API from MrScraper — 1 operation(s) for auth.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  baseURL: https://api.mrscraper.com
+  tags:
+  - auth
+  properties:
+  - type: OpenAPI
+    url: openapi/mrscraper-auth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+  - type: SwaggerUI
+    url: https://api.mrscraper.com/docs
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-swagger-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-auth-subscription-account-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-gateway-request-body-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-job-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-update-task-status-request-schema.json
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/api/overview
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init
+  - type: Authentication
+    url: https://docs.mrscraper.com/docs/api/authentication
+  - type: Pagination
+    url: https://docs.mrscraper.com/docs/api/pagination
+  - type: Errors
+    url: https://docs.mrscraper.com/docs/api/error-handling
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json
+- aid: mrscraper:mrscraper-gateway-api
+  name: MrScraper Gateway API
+  description: The gateway API from MrScraper — 1 operation(s) for gateway.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  baseURL: https://api.mrscraper.com
+  tags:
+  - gateway
+  properties:
+  - type: OpenAPI
+    url: openapi/mrscraper-gateway-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+  - type: SwaggerUI
+    url: https://api.mrscraper.com/docs
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-swagger-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-auth-subscription-account-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-gateway-request-body-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-job-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-update-task-status-request-schema.json
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/api/overview
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init
+  - type: Authentication
+    url: https://docs.mrscraper.com/docs/api/authentication
+  - type: Pagination
+    url: https://docs.mrscraper.com/docs/api/pagination
+  - type: Errors
+    url: https://docs.mrscraper.com/docs/api/error-handling
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json
+- aid: mrscraper:mrscraper-jobs-api
+  name: MrScraper Jobs API
+  description: The jobs API from MrScraper — 2 operation(s) for jobs.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  baseURL: https://api.mrscraper.com
+  tags:
+  - jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/mrscraper-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+  - type: SwaggerUI
+    url: https://api.mrscraper.com/docs
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-swagger-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-auth-subscription-account-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-gateway-request-body-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-job-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-update-task-status-request-schema.json
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/api/overview
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init
+  - type: Authentication
+    url: https://docs.mrscraper.com/docs/api/authentication
+  - type: Pagination
+    url: https://docs.mrscraper.com/docs/api/pagination
+  - type: Errors
+    url: https://docs.mrscraper.com/docs/api/error-handling
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json
+- aid: mrscraper:mrscraper-proxies-api
+  name: MrScraper Proxies API
+  description: The Proxies API from MrScraper — 1 operation(s) for proxies.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  baseURL: https://api.mrscraper.com
+  tags:
+  - Proxies
+  properties:
+  - type: OpenAPI
+    url: openapi/mrscraper-proxies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+  - type: SwaggerUI
+    url: https://api.mrscraper.com/docs
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-swagger-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-auth-subscription-account-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-gateway-request-body-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-job-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-update-task-status-request-schema.json
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/api/overview
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init
+  - type: Authentication
+    url: https://docs.mrscraper.com/docs/api/authentication
+  - type: Pagination
+    url: https://docs.mrscraper.com/docs/api/pagination
+  - type: Errors
+    url: https://docs.mrscraper.com/docs/api/error-handling
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json
+- aid: mrscraper:mrscraper-results-api
+  name: MrScraper Results API
+  description: The Results API from MrScraper — 1 operation(s) for results.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  baseURL: https://api.mrscraper.com
+  tags:
+  - Results
+  properties:
+  - type: OpenAPI
+    url: openapi/mrscraper-results-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+  - type: SwaggerUI
+    url: https://api.mrscraper.com/docs
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-swagger-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-auth-subscription-account-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-gateway-request-body-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-job-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-update-task-status-request-schema.json
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/api/overview
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init
+  - type: Authentication
+    url: https://docs.mrscraper.com/docs/api/authentication
+  - type: Pagination
+    url: https://docs.mrscraper.com/docs/api/pagination
+  - type: Errors
+    url: https://docs.mrscraper.com/docs/api/error-handling
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json
+- aid: mrscraper:mrscraper-storage-api
+  name: MrScraper Storage API
+  description: The storage API from MrScraper — 1 operation(s) for storage.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  baseURL: https://api.mrscraper.com
+  tags:
+  - storage
+  properties:
+  - type: OpenAPI
+    url: openapi/mrscraper-storage-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+  - type: SwaggerUI
+    url: https://api.mrscraper.com/docs
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-swagger-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-auth-subscription-account-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-gateway-request-body-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-job-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-update-task-status-request-schema.json
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/api/overview
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init
+  - type: Authentication
+    url: https://docs.mrscraper.com/docs/api/authentication
+  - type: Pagination
+    url: https://docs.mrscraper.com/docs/api/pagination
+  - type: Errors
+    url: https://docs.mrscraper.com/docs/api/error-handling
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json
+- aid: mrscraper:mrscraper-tasks-api
+  name: MrScraper Tasks API
+  description: The tasks API from MrScraper — 4 operation(s) for tasks.
+  humanURL: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  baseURL: https://api.mrscraper.com
+  tags:
+  - tasks
+  properties:
+  - type: OpenAPI
+    url: openapi/mrscraper-tasks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/getting-started/scraper-api
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/scraper-api/scrape-json
+  - type: SwaggerUI
+    url: https://api.mrscraper.com/docs
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-swagger-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-task-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-auth-subscription-account-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-gateway-request-body-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-job-job-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-task-update-task-status-request-schema.json
+  - type: Documentation
+    url: https://docs.mrscraper.com/docs/api/overview
+  - type: APIReference
+    url: https://docs.mrscraper.com/docs/api/v3/scraper/ai/ai-init
+  - type: Authentication
+    url: https://docs.mrscraper.com/docs/api/authentication
+  - type: Pagination
+    url: https://docs.mrscraper.com/docs/api/pagination
+  - type: Errors
+    url: https://docs.mrscraper.com/docs/api/error-handling
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-results-resultid-response-schema.json
+  - type: JSONSchema
+    url: json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json
+x-enrichment:
+  date: '2026-10-07'
+  status: enriched
+  artifacts_added: 46
+  pass: local-v5

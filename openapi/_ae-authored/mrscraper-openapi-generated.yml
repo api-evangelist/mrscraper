@@ -1,0 +1,164 @@
+openapi: 3.1.0
+info:
+  title: MrScraper API
+  version: '2026-10-07'
+  description: 'GENERATED FROM DOCUMENTATION by API Evangelist on 2026-10-07: 3 operation(s) read from 3 public documentation page(s) (each operation
+    names its page in x-source). This is not the provider''s published contract. MrScraper documents 13 Platform API operations on api.app.mrscraper.com/api/v1
+    through Fumadocs APIPage components rendered from an openapi.json the docs site does not serve as a file; the generator could read only these
+    3 verbatim. The provider DOES publish a Swagger 2.0 contract for its Scraper API gateway at https://api.mrscraper.com/docs/doc.json (see openapi/mrscraper-scraper-service-gateway-openapi.yml).
+    Operations the generator mis-read (collapsed templated paths, MCP-page paths without the /api/v1 prefix, a hard-coded UUID path, Apify Actor
+    endpoints that belong to api.apify.com, marketing-page and proxy-example paths) were removed by a deterministic filter against the provider''s
+    own declared operation list.'
+  x-evidence-tiers:
+    code-example: 25
+    documentation: 3
+    pages-with-code: 40
+    pages-read: 40
+  x-generated-from: documentation
+  x-provenance: generated
+  x-authored-by: API Evangelist
+  x-generated: '2026-10-07'
+  x-generator: generate-contract-from-docs.py
+  x-engine: anthropic
+  x-sources:
+  - https://docs.mrscraper.com/docs/api/authentication
+  - https://docs.mrscraper.com/docs/api/v3/analytic/proxy
+  - https://docs.mrscraper.com/docs/getting-started/mcp-server
+  x-filtered:
+    date: '2026-10-07'
+    kept: 3
+    dropped: 25
+    rule: method+path verbatim in the docs APIPage declarations for document openapi.json
+servers:
+- url: https://api.app.mrscraper.com
+paths:
+  /api/v1/analytic/statuses:
+    get:
+      operationId: get_api_v1_analytic_statuses
+      tags:
+      - Api
+      summary: GET /api/v1/analytic/statuses
+      x-source: https://docs.mrscraper.com/docs/api/authentication
+      parameters:
+      - name: apiTokenName
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: domain
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success (status as documented)
+      x-evidence:
+        kind: code-example
+        language: curl
+        snippet: "curl -X GET \"https://api.app.mrscraper.com/api/v1/analytic/statuses?domain=example.com&startDate=2026-04-12%2000:00:00&endDate=2026-04-13%2023:59:59&apiTokenName=YOUR_TOKEN_NAME\"\
+          \  -H \"accept: application/json\"  -H \"x-api-token: <MRSCRAPER_API_TOKEN>\" \n Note The apiTokenName query parameter filters metrics\
+          \ by the token's name (e.g., production-worker ). API Overview Comprehensive documentation for "
+  /api/v1/proxies/user/requests-bandwidth:
+    get:
+      operationId: get_api_v1_proxies_user_requests_bandwidth
+      tags:
+      - Api
+      summary: GET /api/v1/proxies/user/requests-bandwidth
+      x-source: https://docs.mrscraper.com/docs/api/v3/analytic/proxy
+      parameters:
+      - name: endDate
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success (shape read from the example response on the page)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiV1ProxiesUserRequestsBandwidthResponse'
+      x-evidence:
+        kind: code-example
+        language: curl
+        snippet: "curl JavaScript Go Python Java C# curl -X GET \"https://api.app.mrscraper.com/api/v1/proxies/user/requests-bandwidth?startDate=2026-07-01+09%3A54%3A03&endDate=2026-07-01+10%3A54%3A03\"\
+          \ 200 400 401 [ \n { \n \"username\" : \"john\" , \n \"total_bandwidth_usage\" : 99.384 \n }, \n { \n \"username\" : \"jane\" , \n \"\
+          total_bandwidth_usage\" : 31.022 \n } \n ] { \n \"message\" : \"startDate is required and must be in `yyyy-MM-d"
+  /api/v1/results/{resultId}:
+    get:
+      operationId: get_api_v1_results_resultId
+      tags:
+      - Api
+      summary: Retrieve full output data and metadata for a single stored result by ID.
+      x-source: https://docs.mrscraper.com/docs/getting-started/mcp-server
+      parameters:
+      - name: resultId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: include_html
+        in: query
+        required: false
+        schema:
+          type: boolean
+        description: Includes stored HTML.
+      responses:
+        '200':
+          description: Success (status as documented)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetApiV1ResultsResultidResponse'
+      x-evidence:
+        kind: documentation
+components:
+  schemas:
+    GetApiV1ProxiesUserRequestsBandwidthResponse:
+      type: object
+      properties:
+        username:
+          type: string
+        total_bandwidth_usage:
+          type: number
+    GetApiV1ResultsResultidResponse:
+      type: object
+      properties:
+        status_code:
+          type: integer
+          description: HTTP status returned by the MrScraper service.
+        data:
+          type: object
+          description: Parsed JSON or response text supplied by the service.
+        headers:
+          type: object
+          description: Response headers with credential-bearing headers filtered out.
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      in: header
+      name: x-api-token
+security:
+- apiKey: []
+tags:
+- name: Acts
+- name: Api
+- name: Endpoint
+- name: Scrapers Ai Rerun
+- name: Scrapers Manual Rerun

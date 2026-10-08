@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/mrscraper/main/json-schema/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response-schema.json",
+  "title": "GetApiV1ProxiesUserRequestsBandwidthResponse",
+  "x-generated": "2026-10-07",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/_ae-authored/mrscraper-openapi-generated.yml#/components/schemas/GetApiV1ProxiesUserRequestsBandwidthResponse",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string"
+    },
+    "total_bandwidth_usage": {
+      "type": "number"
+    }
+  }
+}

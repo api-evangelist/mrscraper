@@ -1,0 +1,60 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/getting-started/mcp-server
+standards:
+- id: oauth2
+  conforms: true
+  evidence: https://api.app.mrscraper.com/.well-known/oauth-authorization-server (authorization_code + refresh_token grants, response_types code)
+- id: rfc8414
+  conforms: true
+  evidence: https://api.app.mrscraper.com/.well-known/oauth-authorization-server served 200 application/json with issuer, authorization/token/registration/revocation
+    endpoints and jwks_uri
+- id: rfc9728
+  conforms: true
+  evidence: https://mcp.mrscraper.com/.well-known/oauth-protected-resource/mcp served 200 (resource, authorization_servers, scopes_supported),
+    and the 401 WWW-Authenticate carries resource_metadata
+- id: rfc7636
+  conforms: true
+  evidence: code_challenge_methods_supported ["S256"] in the authorization-server metadata
+- id: rfc7591
+  conforms: true
+  evidence: registration_endpoint https://api.app.mrscraper.com/oauth/register in the authorization-server metadata; client_id_metadata_document_supported
+    true
+- id: rfc7009
+  conforms: true
+  evidence: revocation_endpoint https://api.app.mrscraper.com/oauth/revoke in the authorization-server metadata
+- id: rfc6750
+  conforms: true
+  evidence: 'Marketplace endpoints authenticate with "Authorization: Bearer" per https://docs.mrscraper.com/docs/api/authentication; MCP endpoint
+    answers 401 with WWW-Authenticate: Bearer error="invalid_token"'
+- id: mcp
+  conforms: true
+  evidence: server.json (schema static.modelcontextprotocol.io/schemas/2025-12-11) declares a streamable-http remote at https://mcp.mrscraper.com/mcp;
+    hosted endpoint probed 401 (OAuth gated)
+- id: swagger-2.0
+  conforms: true
+  evidence: https://api.mrscraper.com/docs/doc.json serves a Swagger 2.0 document (15 operations) behind the Swagger UI at https://api.mrscraper.com/docs
+- id: soc2
+  conforms: true
+  evidence: 'https://mrscraper.com/trust: "SOC 2 Compliant - The AICPA standard for how service organisations manage customer data, assessed against
+    the Trust Services Criteria"'
+- id: iso27001
+  conforms: true
+  evidence: 'https://mrscraper.com/trust: "ISO 27001:2022 Compliant - The current revision of the international standard for information security
+    management systems"'
+- id: rfc9457
+  conforms: false
+  evidence: https://docs.mrscraper.com/docs/api/error-handling documents a custom {message, error} JSON envelope, not application/problem+json
+- id: pagination
+  conforms: true
+  evidence: 'https://docs.mrscraper.com/docs/api/pagination: page / pageSize / sortField / sortOrder parameters and a meta {page, pageSize, total,
+    totalPage} block on list endpoints (page-number style, although the page calls it cursor-based)'
+- id: idempotency
+  conforms: false
+  evidence: No Idempotency-Key or replay-protection mechanism is documented anywhere in the API docs or the gateway contract
+- id: openapi-3.0
+  conforms: true
+  evidence: the document declares 3.0.3
+- id: ratelimit-headers
+  conforms: true
+  evidence: responses declare Retry-After

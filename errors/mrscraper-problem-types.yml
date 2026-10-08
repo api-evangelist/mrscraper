@@ -1,0 +1,53 @@
+generated: '2026-10-07'
+method: searched
+source: https://docs.mrscraper.com/docs/api/error-handling
+format: custom-json
+envelope:
+  fields:
+    message: Human-readable description of what went wrong.
+    error: Short error type or category (e.g. Unauthorized, Not Found).
+  example: '{"message": "Unauthorized access", "error": "Unauthorized"}'
+  note: Non-2xx status plus a JSON body. The Platform API 404 shape observed live is {"message":"Cannot GET /path","errors":"Not Found"} (plural key); the gateway at api.mrscraper.com answers {"message":"API token is required","data":null} to an unauthenticated GET /.
+problems:
+- status: 400
+  title: Bad Request
+  type: Bad Request
+  description: The request payload is malformed or a required parameter is missing or in the wrong format.
+  remediation: Fix the payload per the endpoint reference (e.g. use the yyyy-MM-dd HH:mm:ss date format where required).
+  retryable: false
+- status: 401
+  title: Unauthorized
+  type: Unauthorized
+  description: The API token is missing or invalid.
+  remediation: Include a valid token in the x-api-token header.
+  retryable: false
+- status: 403
+  title: Forbidden
+  type: Forbidden
+  description: The token is valid but does not have permission to access this resource, or the token limit is exceeded.
+  remediation: Verify your plan and that the token has access to the resource; contact support@mrscraper.com if needed.
+  retryable: false
+- status: 404
+  title: Not Found
+  type: Not Found
+  description: The requested resource (e.g. a scraper or result) does not exist.
+  remediation: Check that the scraperId / resultId is correct and belongs to your account.
+  retryable: false
+- status: 422
+  title: Unprocessable Entity
+  type: Unprocessable Entity
+  description: The request is well-formed but failed validation.
+  remediation: Review the message for the specific validation failure and correct the input.
+  retryable: false
+- status: 429
+  title: Too Many Requests
+  type: Too Many Requests
+  description: You have exceeded your rate limit.
+  remediation: Back off and retry after a short delay; honor the Retry-After header if present.
+  retryable: true
+- status: 500
+  title: Server errors
+  type: Internal Server Error
+  description: A temporary problem on MrScraper's side.
+  remediation: Retry with exponential backoff; if it persists, contact support@mrscraper.com.
+  retryable: true

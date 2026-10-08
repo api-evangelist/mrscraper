@@ -1,0 +1,1 @@
+{"resource":"https://mcp.mrscraper.com/mcp","authorization_servers":["https://api.app.mrscraper.com"],"scopes_supported":["scrape:read","scrape:write","account:read"],"resource_name":"MrScraper","resource_documentation":"https://docs.mrscraper.com/docs/getting-started/mcp-server"}
