@@ -90,3 +90,36 @@ plans:
   - Residential IPs with flexible bandwidth
   limits: []
 note: Annual plans carry a 20% discount and tokens still reset monthly; unused tokens do not roll over (https://docs.mrscraper.com/docs/getting-started/billing). The billing docs table lists Scraper Free at "1,000 token" while its prose says "100 tokens per month" - the pricing page says 1,000.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - metered
+  - subscription
+  units: []
+  plans:
+  - name: Free
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods: []
+  - name: Scraper Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Residential
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
