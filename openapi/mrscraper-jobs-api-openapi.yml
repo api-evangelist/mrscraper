@@ -1,12 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Mrscraper Jobs API
-  version: '1.0'
+  description: A clean architecture Go service for managing scraping tasks
+  title: Scraper Service Gateway Jobs API
   contact: {}
-  x-refined-note:
-  - x-original-format differs across the merged source definitions and was not carried
-  - x-original-url differs across the merged source definitions and was not carried
-  description: 'Operations tagged jobs across 2 of this provider''s published API definitions: api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml. Each path carries the servers of the definition it was published in.'
+  version: '1.0'
 servers:
 - url: https://api.mrscraper.com
 tags:
@@ -86,7 +83,7 @@ paths:
                     $ref: '#/components/schemas/api.TPaginationMeta'
       summary: Get jobs
       x-summary-source: derived
-      operationId: listJobs
+      operationId: getJobs
       x-operation-id-source: derived
     post:
       security:
@@ -115,10 +112,8 @@ paths:
         required: true
       summary: Create jobs
       x-summary-source: derived
-      operationId: createJob
+      operationId: postJobs
       x-operation-id-source: derived
-    servers:
-    - url: https://api.mrscraper.com
   /jobs/{id}:
     get:
       security:
@@ -147,7 +142,7 @@ paths:
                     type: string
       summary: Get jobs by id
       x-summary-source: derived
-      operationId: getJob
+      operationId: getJobsById
       x-operation-id-source: derived
     put:
       security:
@@ -183,12 +178,25 @@ paths:
         required: true
       summary: Replace jobs by id
       x-summary-source: derived
-      operationId: updateJob
+      operationId: putJobsById
       x-operation-id-source: derived
-    servers:
-    - url: https://api.mrscraper.com
 components:
   schemas:
+    api.TPaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        pageSize:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 2007199
+        totalPage:
+          type: integer
+          example: 200720
     job.Job:
       type: object
       properties:
@@ -211,21 +219,6 @@ components:
         userId:
           type: string
           example: eb8b31cd-0208-4e5a-8bb9-ac57b5e1dc83
-    api.TPaginationMeta:
-      type: object
-      properties:
-        page:
-          type: integer
-          example: 1
-        pageSize:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 2007199
-        totalPage:
-          type: integer
-          example: 200720
     job.JobStatus:
       type: string
       enum:
@@ -249,6 +242,3 @@ components:
       type: apiKey
       name: Authorization
       in: header
-x-refined-from:
-- api.mrscraper.com-docs-doc.json
-- mrscraper-scraper-service-gateway-openapi.yml

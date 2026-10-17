@@ -1,12 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Mrscraper Tasks API
-  version: '1.0'
+  description: A clean architecture Go service for managing scraping tasks
+  title: Scraper Service Gateway Tasks API
   contact: {}
-  x-refined-note:
-  - x-original-format differs across the merged source definitions and was not carried
-  - x-original-url differs across the merged source definitions and was not carried
-  description: 'Operations tagged tasks across 2 of this provider''s published API definitions: api.mrscraper.com-docs-doc.json, mrscraper-scraper-service-gateway-openapi.yml. Each path carries the servers of the definition it was published in.'
+  version: '1.0'
 servers:
 - url: https://api.mrscraper.com
 tags:
@@ -108,7 +105,7 @@ paths:
                     $ref: '#/components/schemas/api.TPaginationMeta'
       summary: Get tasks
       x-summary-source: derived
-      operationId: listTasks
+      operationId: getTasks
       x-operation-id-source: derived
     post:
       security:
@@ -158,10 +155,8 @@ paths:
         required: true
       summary: Create tasks
       x-summary-source: derived
-      operationId: createTask
+      operationId: postTasks
       x-operation-id-source: derived
-    servers:
-    - url: https://api.mrscraper.com
   /tasks/bulk:
     put:
       security:
@@ -202,7 +197,7 @@ paths:
         required: true
       summary: Replace tasks bulk
       x-summary-source: derived
-      operationId: updateTasksBulk
+      operationId: putTasksBulk
       x-operation-id-source: derived
     post:
       security:
@@ -231,10 +226,8 @@ paths:
         required: true
       summary: Create tasks bulk
       x-summary-source: derived
-      operationId: createTasksBulk
+      operationId: postTasksBulk
       x-operation-id-source: derived
-    servers:
-    - url: https://api.mrscraper.com
   /tasks/{id}:
     get:
       security:
@@ -268,7 +261,7 @@ paths:
                     type: string
       summary: Get tasks by id
       x-summary-source: derived
-      operationId: getTask
+      operationId: getTasksById
       x-operation-id-source: derived
     put:
       security:
@@ -346,10 +339,8 @@ paths:
         required: true
       summary: Replace tasks by id
       x-summary-source: derived
-      operationId: updateTask
+      operationId: putTasksById
       x-operation-id-source: derived
-    servers:
-    - url: https://api.mrscraper.com
   /tasks/{id}/status:
     put:
       security:
@@ -427,141 +418,10 @@ paths:
         required: true
       summary: Replace tasks by id status
       x-summary-source: derived
-      operationId: updateTaskStatus
+      operationId: putTasksByIdStatus
       x-operation-id-source: derived
-    servers:
-    - url: https://api.mrscraper.com
 components:
   schemas:
-    task.BatchCreateRequest:
-      description: Batch create request containing array of tasks
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/task.TaskSwagger'
-    task.TaskQueuedResponse:
-      type: object
-      properties:
-        commandId:
-          type: string
-        status:
-          type: string
-        taskId:
-          type: integer
-    task.DeviceOS:
-      type: string
-      enum:
-      - WINDOWS
-      - MACOS
-      - LINUX
-      x-enum-varnames:
-      - DeviceWindows
-      - DeviceMacOS
-      - DeviceLinux
-    task.BrowserType:
-      type: string
-      enum:
-      - CHROME
-      - FIREFOX
-      - SAFARI
-      x-enum-varnames:
-      - BrowserChrome
-      - BrowserFirefox
-      - BrowserSafari
-    task.Task:
-      type: object
-      properties:
-        action:
-          type: string
-          example: scraping
-        browserType:
-          allOf:
-          - $ref: '#/components/schemas/task.BrowserType'
-          example: CHROME
-        callbackUrl:
-          type: string
-          example: https://api.example.com/webhook
-        createdAt:
-          type: string
-          example: '2023-12-01T10:30:00Z'
-        deviceOs:
-          allOf:
-          - $ref: '#/components/schemas/task.DeviceOS'
-          example: WINDOWS
-        domain:
-          type: string
-          example: example.com
-        fingerprintId:
-          type: integer
-          example: 101112
-        id:
-          type: integer
-          example: 1234
-        jobId:
-          type: integer
-          example: 987
-        proxy:
-          type: string
-          example: user:password@127.0.0.1:8080
-        result:
-          type: string
-          example: s3://bucket/path/result.json
-        retryCount:
-          type: integer
-          example: 0
-        scrapeTime:
-          type: number
-          example: 2.5
-        solution:
-          type: string
-          example: captcha_solution_token
-        status:
-          allOf:
-          - $ref: '#/components/schemas/task.TaskStatus'
-          example: PENDING
-        statusMessage:
-          type: string
-          example: Task queued for processing
-        taskDetails:
-          type: object
-        updatedAt:
-          type: string
-          example: '2023-12-01T10:35:00Z'
-        userId:
-          type: string
-          example: user_123
-    task.UpdateTaskStatusRequest:
-      type: object
-      properties:
-        result:
-          type: string
-          example: s3url/path
-        solution:
-          type: string
-          example: scrapedo, scrapeless, etc
-        status:
-          allOf:
-          - $ref: '#/components/schemas/task.TaskStatus'
-          example: PENDING
-        taskDetails:
-          type: object
-    api.TPaginationMeta:
-      type: object
-      properties:
-        page:
-          type: integer
-          example: 1
-        pageSize:
-          type: integer
-          example: 10
-        total:
-          type: integer
-          example: 2007199
-        totalPage:
-          type: integer
-          example: 200720
     task.TaskSwagger:
       type: object
       properties:
@@ -627,29 +487,26 @@ components:
         userId:
           type: string
           example: user_123
-    task.TaskStatus:
+    task.DeviceOS:
       type: string
       enum:
-      - PENDING
-      - PROCESSING
-      - COMPLETED
-      - FAILED
+      - WINDOWS
+      - MACOS
+      - LINUX
       x-enum-varnames:
-      - StatusPending
-      - StatusProcessing
-      - StatusCompleted
-      - StatusFailed
-    task.BatchCreateResponse:
-      description: Response containing created tasks count and task details
-      type: object
-      properties:
-        created:
-          type: integer
-          example: 2
-        tasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/task.Task'
+      - DeviceWindows
+      - DeviceMacOS
+      - DeviceLinux
+    task.BrowserType:
+      type: string
+      enum:
+      - CHROME
+      - FIREFOX
+      - SAFARI
+      x-enum-varnames:
+      - BrowserChrome
+      - BrowserFirefox
+      - BrowserSafari
     task.BatchUpdateTaskSwagger:
       type: object
       required:
@@ -716,6 +573,138 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/task.BatchUpdateTaskSwagger'
+    task.Task:
+      type: object
+      properties:
+        action:
+          type: string
+          example: scraping
+        browserType:
+          allOf:
+          - $ref: '#/components/schemas/task.BrowserType'
+          example: CHROME
+        callbackUrl:
+          type: string
+          example: https://api.example.com/webhook
+        createdAt:
+          type: string
+          example: '2023-12-01T10:30:00Z'
+        deviceOs:
+          allOf:
+          - $ref: '#/components/schemas/task.DeviceOS'
+          example: WINDOWS
+        domain:
+          type: string
+          example: example.com
+        fingerprintId:
+          type: integer
+          example: 101112
+        id:
+          type: integer
+          example: 1234
+        jobId:
+          type: integer
+          example: 987
+        proxy:
+          type: string
+          example: user:password@127.0.0.1:8080
+        result:
+          type: string
+          example: s3://bucket/path/result.json
+        retryCount:
+          type: integer
+          example: 0
+        scrapeTime:
+          type: number
+          example: 2.5
+        solution:
+          type: string
+          example: captcha_solution_token
+        status:
+          allOf:
+          - $ref: '#/components/schemas/task.TaskStatus'
+          example: PENDING
+        statusMessage:
+          type: string
+          example: Task queued for processing
+        taskDetails:
+          type: object
+        updatedAt:
+          type: string
+          example: '2023-12-01T10:35:00Z'
+        userId:
+          type: string
+          example: user_123
+    task.TaskQueuedResponse:
+      type: object
+      properties:
+        commandId:
+          type: string
+        status:
+          type: string
+        taskId:
+          type: integer
+    task.UpdateTaskStatusRequest:
+      type: object
+      properties:
+        result:
+          type: string
+          example: s3url/path
+        solution:
+          type: string
+          example: scrapedo, scrapeless, etc
+        status:
+          allOf:
+          - $ref: '#/components/schemas/task.TaskStatus'
+          example: PENDING
+        taskDetails:
+          type: object
+    task.BatchCreateResponse:
+      description: Response containing created tasks count and task details
+      type: object
+      properties:
+        created:
+          type: integer
+          example: 2
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/task.Task'
+    api.TPaginationMeta:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        pageSize:
+          type: integer
+          example: 10
+        total:
+          type: integer
+          example: 2007199
+        totalPage:
+          type: integer
+          example: 200720
+    task.TaskStatus:
+      type: string
+      enum:
+      - PENDING
+      - PROCESSING
+      - COMPLETED
+      - FAILED
+      x-enum-varnames:
+      - StatusPending
+      - StatusProcessing
+      - StatusCompleted
+      - StatusFailed
+    task.BatchCreateRequest:
+      description: Batch create request containing array of tasks
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/task.TaskSwagger'
   securitySchemes:
     ApiKeyAuth:
       description: atk_example_not_a_real_token
@@ -727,6 +716,3 @@ components:
       type: apiKey
       name: Authorization
       in: header
-x-refined-from:
-- api.mrscraper.com-docs-doc.json
-- mrscraper-scraper-service-gateway-openapi.yml
