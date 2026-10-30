@@ -64,5 +64,175 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-MrScraper is a company surfaced via the API Evangelist harvest backlog (source: monid-connectors) and added to the network as a stub for full-pipeline profiling.
-- https://mrscraper.com
+MrScraper is an AI-powered web scraping platform: a Scraper API (Web Renderer fetch, Scrape JSON/Markdown, screenshots, listing pages and sitemaps on api.mrscraper.com), a Platform API for creating, rerunning and managing scrapers and results (api.app.mrscraper.com/api/v1), Google SERP, residential proxies, a hosted OAuth 2.1 MCP server (mcp.mrscraper.com/mcp), a CLI with agent skills, Node, Python, LangChain and n8n SDKs, and webhooks.
+
+**Areas:** Company · Web Scraping · Data Extraction · Proxies · AI Agents · MCP · Search · Browser Automation
+
+## MrScraper on APIs.io
+
+Everything profiled for MrScraper is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/mrscraper/](https://apis.io/providers/mrscraper/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [MrScraper Google SERP API](https://apis.io/apis/mrscraper/mrscraper-google-serp-api/) — Synchronous Google SERP endpoint (POST https://sync.scraper.mrscraper.com/api/google/serp/v2/sync) returning structured search results in JSON or HTML from…
+- [MrScraper MCP Server](https://apis.io/apis/mrscraper/mrscraper-mcp-server/) — Official Model Context Protocol server: hosted Streamable HTTP endpoint at https://mcp.mrscraper.com/mcp behind OAuth 2.1 (PKCE, dynamic client…
+- [MrScraper Analytic API](https://apis.io/apis/mrscraper/mrscraper-analytic-api/) — The Analytic API from MrScraper — 1 operation(s) for analytic.
+- [MrScraper Auth API](https://apis.io/apis/mrscraper/mrscraper-auth-api/) — The auth API from MrScraper — 1 operation(s) for auth.
+- [MrScraper Gateway API](https://apis.io/apis/mrscraper/mrscraper-gateway-api/) — The gateway API from MrScraper — 1 operation(s) for gateway.
+- [MrScraper Jobs API](https://apis.io/apis/mrscraper/mrscraper-jobs-api/) — The jobs API from MrScraper — 2 operation(s) for jobs.
+- [MrScraper Proxies API](https://apis.io/apis/mrscraper/mrscraper-proxies-api/) — The Proxies API from MrScraper — 1 operation(s) for proxies.
+- [MrScraper Results API](https://apis.io/apis/mrscraper/mrscraper-results-api/) — The Results API from MrScraper — 1 operation(s) for results.
+- [MrScraper Storage API](https://apis.io/apis/mrscraper/mrscraper-storage-api/) — The storage API from MrScraper — 1 operation(s) for storage.
+- [MrScraper Tasks API](https://apis.io/apis/mrscraper/mrscraper-tasks-api/) — The tasks API from MrScraper — 4 operation(s) for tasks.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Mrscraper Webhooks](https://apis.io/asyncapis/mrscraper/mrscraper-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [MrScraper MCP](https://apis.io/servers/mrscraper/mrscraper-mcp/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Mrscraper Agentic Access](https://apis.io/agentic-access/mrscraper/mrscraper-agentic-access/)
+
+#### JSON Schema (8)
+
+The data models the API reads and writes.
+
+- [auth.SubscriptionAccount](https://apis.io/schemas/mrscraper/mrscraper-auth-subscription-account/)
+- [gateway.RequestBody](https://apis.io/schemas/mrscraper/mrscraper-gateway-request-body/)
+- [GetApiV1ProxiesUserRequestsBandwidthResponse](https://apis.io/schemas/mrscraper/mrscraper-get-api-v1-proxies-user-requests-bandwidth-response/)
+- [GetApiV1ResultsResultidResponse](https://apis.io/schemas/mrscraper/mrscraper-get-api-v1-results-resultid-response/)
+- [job.Job](https://apis.io/schemas/mrscraper/mrscraper-job-job/)
+- [task.Task](https://apis.io/schemas/mrscraper/mrscraper-task-task/)
+- [task.TaskSwagger](https://apis.io/schemas/mrscraper/mrscraper-task-task-swagger/)
+- [task.UpdateTaskStatusRequest](https://apis.io/schemas/mrscraper/mrscraper-task-update-task-status-request/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Mrscraper Context](https://apis.io/jsonld/mrscraper/mrscraper-context/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Mrscraper Scraper Service Gateway Overlay](https://apis.io/overlays/mrscraper/mrscraper-scraper-service-gateway-overlay/)
+
+#### Governance rules (1)
+
+Spectral rulesets for the provider's contracts.
+
+- [MrScraper API Rules](https://apis.io/rules/mrscraper/mrscraper-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Mrscraper Authentication](https://apis.io/security/mrscraper/mrscraper-authentication/)
+- [Mrscraper Domain Security](https://apis.io/security/mrscraper/mrscraper-domain-security/)
+- [Mrscraper Trust Center](https://apis.io/security/mrscraper/mrscraper-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Mrscraper Scopes](https://apis.io/scopes/mrscraper/mrscraper-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Mrscraper Plans Pricing](https://apis.io/plans/mrscraper/mrscraper-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Mrscraper Rate Limits](https://apis.io/rate-limits/mrscraper/mrscraper-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://mrscraper.com)
+- [Documentation](https://docs.mrscraper.com)
+- [Getting started](https://docs.mrscraper.com/docs/getting-started/quickstart)
+- [API reference](https://docs.mrscraper.com/docs/api/overview)
+- [Pricing](https://mrscraper.com/pricing)
+- [Support](https://mrscraper.com/support)
+- [Changelog](https://docs.mrscraper.com/docs/changelog/2026/v3.4.14)
+- [Blog](https://mrscraper.com/blog)
+- [Compliance](https://mrscraper.com/trust)
+- [Terms of service](https://mrscraper.com/terms-of-use)
+- [Privacy policy](https://mrscraper.com/privacy-policy)
+- [GitHub](https://github.com/mrscraper-com)
+- [Status](https://status.mrscraper.com)
+
+## API Evangelist rating
+
+**Kin Score 71.3** — exemplar · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 50.2 |
+| Contract governance | 35.6 |
+| Operational transparency | 76.3 |
+| Developer ergonomics | 78.6 |
+| Access clarity | 92.1 |
+
+**Agent readiness 55.6** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | verified |
+| Event Surface Described | yes |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 39.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/mrscraper/](https://apis.io/providers/mrscraper/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for MrScraper: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/mrscraper/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
